@@ -1,0 +1,38 @@
+{
+  "name": "iteaoffice/search",
+  "type": "library",
+  "license": "proprietary",
+  "description": "Code to manage search",
+  "keywords": [
+    "search"
+  ],
+  "homepage": "https://itea3.org",
+  "authors": [
+    {
+      "name": "Johan van der Heide",
+      "email": "johan.van.der.heide@itea3.org"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.2",
+    "zendframework/zend-mvc": "^3.0.1",
+    "phpoffice/phppresentation": "0.9.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Search\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ProjectTest\\": "test/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev",
+      "dev-develop": "1.0.x-dev"
+    }
+  }
+}
