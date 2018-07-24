@@ -1,5 +1,5 @@
-iteaoffice\project
+iteaoffice\search
 ==================
 
-master branch: 3.0.x-dev
-develop branch: 3.1.x-dev
+master branch: 0.1.x-dev
+develop branch: 1.0.x-dev
