@@ -26,9 +26,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
  */
 final class SearchServiceFactory implements FactoryInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

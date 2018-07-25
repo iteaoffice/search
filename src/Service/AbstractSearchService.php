@@ -112,21 +112,21 @@ abstract class AbstractSearchService implements SearchServiceInterface
                         || preg_match('/^-.+$/', $part)
                     ) {
                         $query .= ' ' . Query::QUERY_OPERATOR_AND . ' ';
-                    } // Add an OR between fields by default
-                    elseif (($partIteration > 1) && ($part !== '+')) {
+                    } elseif (($partIteration > 1) && ($part !== '+')) {
+                        // Add an OR between fields by default
                         $query .= ' ' . Query::QUERY_OPERATOR_OR . ' ';
                     }
                     // Part is a quoted literal string -> "literal string" or -"literal string"
                     if (preg_match('/^-?".+"$/', $part)) {
                         $query .= $parseTerm($field, $part) . '^' . self::QUERY_TERM_BOOST;
-                    } // Other unquoted term
-                    elseif ($part !== '+') {
+                    } elseif ($part !== '+') {
+                        // Other unquoted term
                         $query .= $parseTerm($field, $part);
                     }
                     $partIteration++;
                 }
-            } // Search term is a single word
-            else {
+            } else {
+                // Search term is a single word
                 $query .= $parseTerm($field, $searchTerm);
             }
             $query .= ')';
