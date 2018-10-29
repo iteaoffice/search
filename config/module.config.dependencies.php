@@ -17,21 +17,23 @@ declare(strict_types=1);
 
 namespace Search;
 
-use Affiliation\Search\Service\AffiliationSearchService;
-use Contact\Search\Service\ContactSearchService;
-use Contact\Search\Service\ProfileSearchService;
-use Event\Search\Service\RegistrationSearchService;
-use Invoice\Search\Service\InvoiceSearchService;
-use Project\Search\Service\DescriptionSearchService;
-use Project\Search\Service\IdeaSearchService;
-use Project\Search\Service\ImpactStreamSearchService;
-use Project\Search\Service\ProjectSearchService;
-use Project\Search\Service\ResultSearchService;
-use Project\Search\Service\VersionDocumentSearchService;
-use Project\Search\Service\VersionSearchService;
-use Project\Search\Service\WorkpackageDocumentSearchService;
-use Publication\Search\Service\PublicationSearchService;
-use Search\Service\ConsoleService;
+use Affiliation\Service\AffiliationService;
+use Calendar\Service\CalendarService;
+use Contact\Service\ContactService;
+use Event\Service\RegistrationService;
+use General\Service\CountryService;
+use Invoice\Service\InvoiceService;
+use News\Service\NewsService;
+use Organisation\Service\OrganisationService;
+use Press\Service\PressService;
+use Project\Service\DescriptionService;
+use Project\Service\IdeaService;
+use Project\Service\ProjectService;
+use Project\Service\ResultService;
+use Project\Service\VersionDocumentService;
+use Project\Service\VersionService;
+use Project\Service\WorkpackageService;
+use Publication\Service\PublicationService;
 use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 return [
@@ -41,23 +43,26 @@ return [
             'Config'
         ],
         Controller\ConsoleController::class => [
-            ConsoleService::class
+            Service\ConsoleService::class
         ],
         Service\ConsoleService::class       => [
-            ContactSearchService::class,
-            ProfileSearchService::class,
-            IdeaSearchService::class,
-            DescriptionSearchService::class,
-            ProjectSearchService::class,
-            VersionSearchService::class,
-            VersionDocumentSearchService::class,
-            WorkpackageDocumentSearchService::class,
-            ResultSearchService::class,
-            ImpactStreamSearchService::class,
-            PublicationSearchService::class,
-            InvoiceSearchService::class,
-            AffiliationSearchService::class,
-            RegistrationSearchService::class
+            ContactService::class,
+            IdeaService::class,
+            DescriptionService::class,
+            ProjectService::class,
+            VersionService::class,
+            VersionDocumentService::class,
+            WorkpackageService::class,
+            ResultService::class,
+            PublicationService::class,
+            InvoiceService::class,
+            AffiliationService::class,
+            RegistrationService::class,
+            CalendarService::class,
+            NewsService::class,
+            PressService::class,
+            OrganisationService::class,
+            CountryService::class
         ],
     ]
 ];
