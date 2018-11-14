@@ -26,16 +26,8 @@ use Zend\Form\Form;
  */
 final class SearchResult extends Form
 {
-    /**
-     * @var array
-     */
     private $facetLabels = [];
 
-    /**
-     * SearchResult constructor.
-     *
-     * @param array $searchFields
-     */
     public function __construct(array $searchFields = [])
     {
         parent::__construct('search_result');
@@ -158,16 +150,12 @@ final class SearchResult extends Form
         );
     }
 
-    /**
-     * Populate and add the facet fieldset to the search form
-     *
-     * @param FacetSetComponent $facetSet
-     * @param FacetSetResult    $facetSetResult
-     *
-     * @return SearchResult|Form
-     */
-    public function addSearchResults(FacetSetComponent $facetSet, FacetSetResult $facetSetResult): SearchResult
-    {
+
+    public function addSearchResults(
+        FacetSetComponent $facetSet,
+        FacetSetResult $facetSetResult,
+        bool $reverse = false
+    ): SearchResult {
         $facetFieldset = new Fieldset('facet');
 
         foreach ($facetSet->getFacets() as $facetName => $facet) {
@@ -249,13 +237,17 @@ final class SearchResult extends Form
                 }
             }
 
+            if ($reverse) {
+                $multiOptions = \array_reverse($multiOptions, true);
+            }
+
             if (\count($multiOptions) > 0) {
                 $facetElement = new MultiCheckbox();
                 $facetElement->setName($facet->getOptions()['field']);
                 if (isset($this->facetLabels[$facetName])) {
                     $facetElement->setLabel($this->facetLabels[$facetName]);
                 } else {
-                    $facetElement->setLabel(ucfirst(str_replace('_', ' ', $facetName)));
+                    $facetElement->setLabel(\ucfirst(\str_replace('_', ' ', $facetName)));
                 }
                 $facetElement->setValueOptions($multiOptions);
                 $facetElement->setLabelOption('escape', false);
@@ -268,13 +260,6 @@ final class SearchResult extends Form
         return $this->add($facetFieldset);
     }
 
-    /**
-     * Set custom labels for the facet names as ['facet_name' => 'My facet label']
-     *
-     * @param array $labels
-     *
-     * @return SearchResult
-     */
     public function setFacetLabels(array $labels): SearchResult
     {
         $this->facetLabels = $labels;
