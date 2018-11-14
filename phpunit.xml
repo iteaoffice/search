@@ -8,7 +8,7 @@
         processIsolation="false"
         backupGlobals="false"
 >
-    <testsuite name="iteaoffice/project">
+    <testsuite name="iteaoffice/search">
         <directory>./test</directory>
     </testsuite>
     <filter>
@@ -18,7 +18,6 @@
     </filter>
 
     <logging>
-        <log type="coverage-clover" target="./clover.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
 </phpunit>

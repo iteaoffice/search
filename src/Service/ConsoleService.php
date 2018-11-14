@@ -17,20 +17,24 @@ declare(strict_types=1);
 
 namespace Search\Service;
 
-use Affiliation\Search\Service\AffiliationSearchService;
-use Contact\Search\Service\ContactSearchService;
-use Contact\Search\Service\ProfileSearchService;
-use Event\Search\Service\RegistrationSearchService;
-use Invoice\Search\Service\InvoiceSearchService;
-use Project\Search\Service\DescriptionSearchService;
-use Project\Search\Service\IdeaSearchService;
-use Project\Search\Service\ImpactStreamSearchService;
-use Project\Search\Service\ProjectSearchService;
-use Project\Search\Service\ResultSearchService;
-use Project\Search\Service\VersionDocumentSearchService;
-use Project\Search\Service\VersionSearchService;
-use Project\Search\Service\WorkpackageDocumentSearchService;
-use Publication\Search\Service\PublicationSearchService;
+use Affiliation\Service\AffiliationService;
+use Calendar\Service\CalendarService;
+use Contact\Service\ContactService;
+use Contact\Service\ProfileService;
+use Event\Service\RegistrationService;
+use General\Service\CountryService;
+use Invoice\Service\InvoiceService;
+use News\Service\NewsService;
+use Organisation\Service\OrganisationService;
+use Press\Service\PressService;
+use Project\Service\DescriptionService;
+use Project\Service\IdeaService;
+use Project\Service\ProjectService;
+use Project\Service\ResultService;
+use Project\Service\VersionDocumentService;
+use Project\Service\VersionService;
+use Project\Service\WorkpackageService;
+use Publication\Service\PublicationService;
 
 /**
  * Class SearchControllerFactory
@@ -40,154 +44,188 @@ use Publication\Search\Service\PublicationSearchService;
 class ConsoleService
 {
     /**
-     * @var ContactSearchService
+     * @var ContactService
      */
-    private $contactSearchService;
+    private $contactService;
     /**
-     * @var ProfileSearchService
+     * @var IdeaService
      */
-    private $profileSearchService;
+    private $ideaService;
     /**
-     * @var IdeaSearchService
+     * @var DescriptionService
      */
-    private $ideaSearchService;
+    private $descriptionService;
     /**
-     * @var DescriptionSearchService
+     * @var ProjectService
      */
-    private $descriptionSearchService;
+    private $projectService;
     /**
-     * @var ProjectSearchService
+     * @var VersionService
      */
-    private $projectSearchService;
+    private $versionService;
     /**
-     * @var VersionSearchService
+     * @var VersionDocumentService
      */
-    private $versionSearchService;
+    private $versionDocumentService;
     /**
-     * @var VersionDocumentSearchService
+     * @var WorkpackageService
      */
-    private $versionDocumentSearchService;
+    private $workpackageService;
     /**
-     * @var WorkpackageDocumentSearchService
+     * @var ResultService
      */
-    private $workpackageDocumentSearchService;
+    private $resultService;
     /**
-     * @var ResultSearchService
+     * @var PublicationService
      */
-    private $resultSearchService;
+    private $publicationService;
     /**
-     * @var ImpactStreamSearchService
+     * @var InvoiceService
      */
-    private $impactStreamSearchService;
+    private $invoiceService;
     /**
-     * @var PublicationSearchService
+     * @var AffiliationService
      */
-    private $publicationSearchService;
+    private $affiliationService;
     /**
-     * @var InvoiceSearchService
+     * @var RegistrationService
      */
-    private $invoiceSearchService;
+    private $registrationService;
     /**
-     * @var AffiliationSearchService
+     * @var CalendarService
      */
-    private $affiliationSearchService;
+    private $calendarService;
     /**
-     * @var RegistrationSearchService
+     * @var NewsService
      */
-    private $registrationSearchService;
+    private $newsService;
+    /**
+     * @var PressService
+     */
+    private $pressService;
+    /**
+     * @var OrganisationService
+     */
+    private $organisationService;
+    /**
+     * @var CountryService
+     */
+    private $countryService;
 
     public function __construct(
-        ContactSearchService $contactSearchService,
-        ProfileSearchService $profileSearchService,
-        IdeaSearchService $ideaSearchService,
-        DescriptionSearchService $descriptionSearchService,
-        ProjectSearchService $projectSearchService,
-        VersionSearchService $versionSearchService,
-        VersionDocumentSearchService $versionDocumentSearchService,
-        WorkpackageDocumentSearchService $workpackageDocumentSearchService,
-        ResultSearchService $resultSearchService,
-        ImpactStreamSearchService $impactStreamSearchService,
-        PublicationSearchService $publicationSearchService,
-        InvoiceSearchService $invoiceSearchService,
-        AffiliationSearchService $affiliationSearchService,
-        RegistrationSearchService $registrationSearchService
+        ContactService $contactService,
+        IdeaService $ideaService,
+        DescriptionService $descriptionService,
+        ProjectService $projectService,
+        VersionService $versionService,
+        VersionDocumentService $versionDocumentService,
+        WorkpackageService $WorkpackageService,
+        ResultService $resultService,
+        PublicationService $publicationService,
+        InvoiceService $invoiceService,
+        AffiliationService $affiliationService,
+        RegistrationService $registrationService,
+        CalendarService $calendarService,
+        NewsService $newsService,
+        PressService $pressService,
+        OrganisationService $organisationService,
+        CountryService $countryService
     ) {
-        $this->contactSearchService = $contactSearchService;
-        $this->profileSearchService = $profileSearchService;
-        $this->ideaSearchService = $ideaSearchService;
-        $this->descriptionSearchService = $descriptionSearchService;
-        $this->projectSearchService = $projectSearchService;
-        $this->versionSearchService = $versionSearchService;
-        $this->versionDocumentSearchService = $versionDocumentSearchService;
-        $this->workpackageDocumentSearchService = $workpackageDocumentSearchService;
-        $this->resultSearchService = $resultSearchService;
-        $this->impactStreamSearchService = $impactStreamSearchService;
-        $this->publicationSearchService = $publicationSearchService;
-        $this->invoiceSearchService = $invoiceSearchService;
-        $this->affiliationSearchService = $affiliationSearchService;
-        $this->registrationSearchService = $registrationSearchService;
+        $this->contactService = $contactService;
+        $this->ideaService = $ideaService;
+        $this->descriptionService = $descriptionService;
+        $this->projectService = $projectService;
+        $this->versionService = $versionService;
+        $this->versionDocumentService = $versionDocumentService;
+        $this->workpackageService = $WorkpackageService;
+        $this->resultService = $resultService;
+        $this->publicationService = $publicationService;
+        $this->invoiceService = $invoiceService;
+        $this->affiliationService = $affiliationService;
+        $this->registrationService = $registrationService;
+        $this->calendarService = $calendarService;
+        $this->newsService = $newsService;
+        $this->pressService = $pressService;
+        $this->organisationService = $organisationService;
+        $this->countryService = $countryService;
     }
 
     public function resetIndex(string $index, $clearIndex = false): void
     {
         switch ($index) {
             case 'contact':
-                $this->contactSearchService->updateIndex($clearIndex);
+                $this->contactService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'profile':
-                $this->profileSearchService->updateIndex($clearIndex);
+                $this->contactService->updateProfileCollectionInSearchEngine($clearIndex);
                 break;
             case 'registration':
-                $this->registrationSearchService->updateIndex($clearIndex);
+                $this->registrationService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'idea':
-                $this->ideaSearchService->updateIndex($clearIndex);
+                $this->ideaService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'roadmap':
-                $this->descriptionSearchService->updateIndex($clearIndex);
+                $this->descriptionService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'project':
-                $this->projectSearchService->updateIndex($clearIndex);
+                $this->projectService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'version':
-                $this->versionSearchService->updateIndex($clearIndex);
+                $this->versionService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'version-document':
-                $this->versionDocumentSearchService->updateIndex($clearIndex);
+                $this->versionDocumentService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'workpackage-document':
-                $this->workpackageDocumentSearchService->updateIndex($clearIndex);
+                $this->workpackageService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'result':
-                $this->resultSearchService->updateIndex($clearIndex);
-                break;
-            case 'impact-stream':
-                $this->impactStreamSearchService->updateIndex($clearIndex);
+                $this->resultService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'publication':
-                $this->publicationSearchService->updateIndex($clearIndex);
+                $this->publicationService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'invoice':
-                $this->invoiceSearchService->updateIndex($clearIndex);
+                $this->invoiceService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'affiliation':
-                $this->affiliationSearchService->updateIndex($clearIndex);
+                $this->affiliationService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'calendar':
+                $this->calendarService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'news':
+                $this->newsService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'press':
+                $this->pressService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'organisation':
+                $this->organisationService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'country':
+                $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'all':
-                $this->contactSearchService->updateIndex($clearIndex);
-                $this->profileSearchService->updateIndex($clearIndex);
-                $this->registrationSearchService->updateIndex($clearIndex);
-                $this->ideaSearchService->updateIndex($clearIndex);
-                $this->descriptionSearchService->updateIndex($clearIndex);
-                $this->projectSearchService->updateIndex($clearIndex);
-                $this->versionSearchService->updateIndex($clearIndex);
-                $this->versionDocumentSearchService->updateIndex($clearIndex);
-                $this->workpackageDocumentSearchService->updateIndex($clearIndex);
-                $this->resultSearchService->updateIndex($clearIndex);
-                $this->impactStreamSearchService->updateIndex($clearIndex);
-                $this->publicationSearchService->updateIndex($clearIndex);
-                $this->invoiceSearchService->updateIndex($clearIndex);
-                $this->affiliationSearchService->updateIndex($clearIndex);
+                $this->contactService->updateCollectionInSearchEngine($clearIndex);
+                $this->contactService->updateProfileCollectionInSearchEngine($clearIndex);
+                $this->registrationService->updateCollectionInSearchEngine($clearIndex);
+                $this->ideaService->updateCollectionInSearchEngine($clearIndex);
+                $this->descriptionService->updateCollectionInSearchEngine($clearIndex);
+                $this->projectService->updateCollectionInSearchEngine($clearIndex);
+                $this->versionService->updateCollectionInSearchEngine($clearIndex);
+                $this->versionDocumentService->updateCollectionInSearchEngine($clearIndex);
+                $this->workpackageService->updateCollectionInSearchEngine($clearIndex);
+                $this->resultService->updateCollectionInSearchEngine($clearIndex);
+                $this->publicationService->updateCollectionInSearchEngine($clearIndex);
+                $this->invoiceService->updateCollectionInSearchEngine($clearIndex);
+                $this->affiliationService->updateCollectionInSearchEngine($clearIndex);
+                $this->calendarService->updateCollectionInSearchEngine($clearIndex);
+                $this->newsService->updateCollectionInSearchEngine($clearIndex);
+                $this->pressService->updateCollectionInSearchEngine($clearIndex);
+                $this->organisationService->updateCollectionInSearchEngine($clearIndex);
+                $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
             default:
                 throw new \InvalidArgumentException(sprintf("%s is incorrect", $index));
@@ -196,6 +234,6 @@ class ConsoleService
 
     public function updateRegistrationByMeeting(int $meetingId, bool $clearIndex = false): void
     {
-        $this->registrationSearchService->updateRegistrationByMeeting($meetingId, $clearIndex);
+        $this->registrationService->updateRegistrationByMeeting($meetingId, $clearIndex);
     }
 }

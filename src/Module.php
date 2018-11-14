@@ -20,7 +20,9 @@ use Zend\Console\Adapter\AdapterInterface;
 use Zend\ModuleManager\Feature;
 
 /**
+ * Class Module
  *
+ * @package Search
  */
 class Module implements
     Feature\ConfigProviderInterface,
@@ -39,12 +41,12 @@ class Module implements
             'search reset <entity>'                => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
-                'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, result, impact-stream, publication, invoice, contact, profile, affiliation, registration, all',
+                'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, result, impact-stream, publication, invoice, contact, profile, affiliation, registration, calendar, news, press, organisation, country all',
             ],
             'search update <entity>'               => 'Update the search index',
             [
                 '<entity>',
-                'Choose an entity to update: project, version, roadmap, version-document, workpackage-document, result, impact-stream, publication, invoice, contact, profile, affiliation, registration, all',
+                'Choose an entity to update: project, version, roadmap, version-document, workpackage-document, result, impact-stream, publication, invoice, contact, profile, affiliation, registration, calendar, news, press, organisation, country all',
             ],
             'search reset-registration <meeting>'  => 'Reset the registrations of a meeting',
             [
