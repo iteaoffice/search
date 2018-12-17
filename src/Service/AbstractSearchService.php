@@ -61,7 +61,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         $parseTerm = function (string $field, string $searchTerm): string {
             // Exclude term
-            if (substr($searchTerm, 0, 1) === '-') {
+            if (\substr($searchTerm, 0, 1) === '-') {
                 return '-' . $field . ':' . substr($searchTerm, 1);
             } elseif (empty($searchTerm)) { // Empty search
                 return $field . ':*';
@@ -259,7 +259,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
 
                 if (!empty($responseBody)) {
-                    $response = json_decode($responseBody);
+                    $response = \json_decode($responseBody);
                     if (isset($response->responseHeader)) {
                         $template .= "Solr HTTP response code: \033[1;33m" . $response->responseHeader->status
                             . "\033[0m\n";
@@ -268,7 +268,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                         $template .= "Solr error message: \033[1;33m" . $response->error->msg . "\033[0m\n";
                     }
                 }
-                echo sprintf($template, get_class($entity), '', $e->getMessage());
+                echo sprintf($template, \get_class($entity), '', $e->getMessage());
                 echo "\n";
             } catch (\Throwable $e) {
                 $errors++;
@@ -286,7 +286,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         echo "\n\n===================================";
         echo "\nDocuments processed: \033[1;33m" . count($entityCollection) . "\033[0m";
         echo "\nErrors: \033[1;33m" . $errors . "\033[0m";
-        echo "\nDuration: \033[1;33m" . gmdate("H:i:s", (time() - $start)) . "\033[0m\n\n";
+        echo "\nDuration: \033[1;33m" . gmdate("H:i:s", \time() - $start) . "\033[0m\n\n";
     }
 
     public function executeUpdateDocument(AbstractQuery $update): ?UpdateResult
