@@ -154,90 +154,19 @@ final class SearchResult extends Form
     public function addSearchResults(
         FacetSetComponent $facetSet,
         FacetSetResult $facetSetResult,
-        bool $reverse = false
-    ): SearchResult {
+        array $reverse = []
+    ): Form {
         $facetFieldset = new Fieldset('facet');
 
         foreach ($facetSet->getFacets() as $facetName => $facet) {
             $multiOptions = [];
             foreach ($facetSetResult->getFacets()[$facetName] as $value => $count) {
-                if ($facetName === 'content_type') {
-                    switch (strtolower($value)) {
-                        case 'application/pdf':
-                        case 'application/postscript':
-                            $type = 'PDF';
-                            break;
-                        case 'application/zip':
-                            $type = 'ZIP archive';
-                            break;
-                        case 'application/x-rar-compressed':
-                            $type = 'RAR archive';
-                            break;
-                        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                        case 'application/vnd.ms-excel.sheet.macroenabled.12':
-                        case 'application/vnd.ms-excel':
-                            $type = 'Excel';
-                            break;
-                        case 'application/msword':
-                        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.template':
-                        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                            $type = 'Word';
-                            break;
-                        case 'application/vnd.ms-powerpoint':
-                        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-                        case 'application/vnd.openxmlformats-officedocument.presentationml.template':
-                        case 'application/vnd.openxmlformats-officedocument.presentationml.slideshow':
-                            $type = 'PowerPoint';
-                            break;
-                        case 'text/html; charset=windows-1252':
-                            $type = 'HTML';
-                            break;
-                        case 'text/plain; charset=iso-8859-1':
-                        case 'text/plain; charset=windows-1252':
-                            $type = 'Plain/HTML';
-                            break;
-                        case 'image/png':
-                            $type = 'PNG image';
-                            break;
-                        case 'image/jpg':
-                        case 'image/jpeg':
-                            $type = 'JPG image';
-                            break;
-                        case 'video/x-msvideo':
-                            $type = 'MS video';
-                            break;
-                        case 'video/x-ms-wmv':
-                            $type = 'WMV video';
-                            break;
-                        case 'video/x-ms-asf':
-                            $type = 'ASF video';
-                            break;
-                        case 'application/mp4':
-                            $type = 'MP4 video';
-                            break;
-                        case 'message/rfc822':
-                            $type = 'Message';
-                            break;
-                        case 'application/xml':
-                            $type = 'XML document';
-                            break;
-                        case 'application/octet-stream':
-                            $type = 'Other';
-                            break;
-                        default:
-                            $type = $value;
-                    }
-                    $multiOptions[$value] = sprintf("%s [%s]", $type, $count);
-                } else {
-                    $value = (string)$value;
+                $title = $this->parseTitleFromFacetName($facetName, (string) $value);
 
-                    $title = (strlen($value) > 30) ? substr(ucfirst($value), 0, 29) . '…'
-                        : ucfirst($value);
-                    $multiOptions[$value] = sprintf('%s [%s]', $title, $count);
-                }
+                $multiOptions[$value] = \sprintf('%s [%s]', $title, $count);
             }
 
-            if ($reverse) {
+            if (\in_array($facetName, $reverse, true)) {
                 $multiOptions = \array_reverse($multiOptions, true);
             }
 
@@ -260,10 +189,131 @@ final class SearchResult extends Form
         return $this->add($facetFieldset);
     }
 
+    private function parseTitleFromFacetName(string $facetName, string $value): string
+    {
+        if ($facetName !== 'content_type') {
+            return $value;
+        }
+
+        switch (\strtolower($value)) {
+            case 'application/pdf':
+            case 'application/postscript':
+                return 'PDF';
+
+            case 'application/zip':
+                return 'ZIP archive';
+
+            case 'application/x-rar-compressed':
+                return 'RAR archive';
+
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            case 'application/vnd.ms-excel.sheet.macroenabled.12':
+            case 'application/vnd.ms-excel':
+                return 'Excel';
+
+            case 'application/msword':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.template':
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return 'Word';
+
+            case 'application/vnd.ms-powerpoint':
+            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+            case 'application/vnd.openxmlformats-officedocument.presentationml.template':
+            case 'application/vnd.openxmlformats-officedocument.presentationml.slideshow':
+                return 'PowerPoint';
+
+            case 'text/html; charset=windows-1252':
+                return 'HTML';
+
+            case 'text/plain; charset=iso-8859-1':
+            case 'text/plain; charset=windows-1252':
+                return 'Plain/HTML';
+
+            case 'image/png':
+                return 'PNG image';
+
+            case 'image/jpg':
+            case 'image/jpeg':
+                return 'JPG image';
+
+            case 'video/x-msvideo':
+                return 'MS video';
+
+            case 'video/x-ms-wmv':
+                return 'WMV video';
+
+            case 'video/x-ms-asf':
+                return 'ASF video';
+
+            case 'application/mp4':
+                return 'MP4 video';
+
+            case 'message/rfc822':
+                return 'Message';
+
+            case 'application/xml':
+                return 'XML document';
+
+            case 'application/octet-stream':
+                return 'Other';
+
+            default:
+                return $value;
+        }
+    }
+
     public function setFacetLabels(array $labels): SearchResult
     {
         $this->facetLabels = $labels;
 
         return $this;
+    }
+
+    public function getBadges(): array
+    {
+        $badges = [];
+        if ('' !== $this->data['query']) {
+            $badges[] = [
+                'facet'          => $this->data['query'],
+                'facetArguments' => \http_build_query(
+                    [
+                        'facet' => $this->data['facet']
+                    ]
+                )
+            ];
+        }
+        foreach ($this->data['facet'] as $facetName => $facets) {
+            foreach ($facets as $facet) {
+                //Remaining facets are all facets wheren the current facet value is filtered out
+                $remainingFacets = $this->data['facet'];
+
+                if (($key = \array_search($facet, $remainingFacets[$facetName], true)) !== false) {
+                    unset($remainingFacets[$facetName][$key]);
+                }
+                $badges[] = [
+                    'facet'          => $facet,
+                    'facetArguments' => \http_build_query(
+                        [
+                            'query' => $this->data['query'],
+                            'facet' => $remainingFacets
+                        ]
+                    )
+                ];
+            }
+        }
+
+        return $badges;
+    }
+
+    public function getFilteredData(): array
+    {
+        // Remove order and direction from the GET params to prevent duplication
+        return \array_filter(
+            $this->data,
+            function ($key) {
+                return !\in_array($key, ['order', 'direction'], true);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
     }
 }
