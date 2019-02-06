@@ -18,7 +18,7 @@
     "php": "^7.2",
     "zendframework/zend-mvc": "^3.0.1",
     "zendframework/zend-mvc-form": "^1.0.0",
-    "solarium/solarium": "^4.1",
+    "solarium/solarium": "4.2.*",
     "phpoffice/phppresentation": "^0.9"
   },
   "require-dev": {
