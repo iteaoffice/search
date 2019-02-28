@@ -23,9 +23,11 @@ use Contact\Service\ContactService;
 use Event\Service\RegistrationService;
 use General\Service\CountryService;
 use Invoice\Service\InvoiceService;
+use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\ActionService;
 use Project\Service\DescriptionService;
 use Project\Service\IdeaService;
 use Project\Service\ProjectService;
@@ -54,12 +56,14 @@ return [
             VersionDocumentService::class,
             WorkpackageService::class,
             ResultService::class,
+            ActionService::class,
             PublicationService::class,
             InvoiceService::class,
             AffiliationService::class,
             RegistrationService::class,
             CalendarService::class,
             NewsService::class,
+            BlogService::class,
             PressService::class,
             OrganisationService::class,
             CountryService::class

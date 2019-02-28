@@ -20,13 +20,14 @@ namespace Search\Service;
 use Affiliation\Service\AffiliationService;
 use Calendar\Service\CalendarService;
 use Contact\Service\ContactService;
-use Contact\Service\ProfileService;
 use Event\Service\RegistrationService;
 use General\Service\CountryService;
 use Invoice\Service\InvoiceService;
+use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\ActionService;
 use Project\Service\DescriptionService;
 use Project\Service\IdeaService;
 use Project\Service\ProjectService;
@@ -76,6 +77,10 @@ class ConsoleService
      */
     private $resultService;
     /**
+     * @var ActionService
+     */
+    private $actionService;
+    /**
      * @var PublicationService
      */
     private $publicationService;
@@ -100,6 +105,10 @@ class ConsoleService
      */
     private $newsService;
     /**
+     * @var BlogService
+     */
+    private $blogService;
+    /**
      * @var PressService
      */
     private $pressService;
@@ -121,12 +130,14 @@ class ConsoleService
         VersionDocumentService $versionDocumentService,
         WorkpackageService $WorkpackageService,
         ResultService $resultService,
+        ActionService $actionService,
         PublicationService $publicationService,
         InvoiceService $invoiceService,
         AffiliationService $affiliationService,
         RegistrationService $registrationService,
         CalendarService $calendarService,
         NewsService $newsService,
+        BlogService $blogService,
         PressService $pressService,
         OrganisationService $organisationService,
         CountryService $countryService
@@ -139,12 +150,14 @@ class ConsoleService
         $this->versionDocumentService = $versionDocumentService;
         $this->workpackageService = $WorkpackageService;
         $this->resultService = $resultService;
+        $this->actionService = $actionService;
         $this->publicationService = $publicationService;
         $this->invoiceService = $invoiceService;
         $this->affiliationService = $affiliationService;
         $this->registrationService = $registrationService;
         $this->calendarService = $calendarService;
         $this->newsService = $newsService;
+        $this->blogService = $blogService;
         $this->pressService = $pressService;
         $this->organisationService = $organisationService;
         $this->countryService = $countryService;
@@ -183,6 +196,9 @@ class ConsoleService
             case 'result':
                 $this->resultService->updateCollectionInSearchEngine($clearIndex);
                 break;
+            case 'action':
+                $this->actionService->updateCollectionInSearchEngine($clearIndex);
+                break;
             case 'publication':
                 $this->publicationService->updateCollectionInSearchEngine($clearIndex);
                 break;
@@ -197,6 +213,9 @@ class ConsoleService
                 break;
             case 'news':
                 $this->newsService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'blog':
+                $this->blogService->updateCollectionInSearchEngine($clearIndex);
                 break;
             case 'press':
                 $this->pressService->updateCollectionInSearchEngine($clearIndex);
@@ -215,6 +234,7 @@ class ConsoleService
                 $this->descriptionService->updateCollectionInSearchEngine($clearIndex);
                 $this->projectService->updateCollectionInSearchEngine($clearIndex);
                 $this->versionService->updateCollectionInSearchEngine($clearIndex);
+                $this->actionService->updateCollectionInSearchEngine($clearIndex);
                 $this->versionDocumentService->updateCollectionInSearchEngine($clearIndex);
                 $this->workpackageService->updateCollectionInSearchEngine($clearIndex);
                 $this->resultService->updateCollectionInSearchEngine($clearIndex);
@@ -223,6 +243,7 @@ class ConsoleService
                 $this->affiliationService->updateCollectionInSearchEngine($clearIndex);
                 $this->calendarService->updateCollectionInSearchEngine($clearIndex);
                 $this->newsService->updateCollectionInSearchEngine($clearIndex);
+                $this->blogService->updateCollectionInSearchEngine($clearIndex);
                 $this->pressService->updateCollectionInSearchEngine($clearIndex);
                 $this->organisationService->updateCollectionInSearchEngine($clearIndex);
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);

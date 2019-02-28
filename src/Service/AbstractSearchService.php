@@ -278,7 +278,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $template .= "Error file: \033[1;33m" . $e->getFile() . "\033[0m\n";
                 $template .= "Error number: \033[1;33m" . $e->getLine() . "\033[0m\n";
 
-                echo \sprintf($template, \get_class($entity), $entity->getId());
+                echo \sprintf($template, \get_class($entity), 'asdf');
                 echo "\n";
             }
         }
@@ -317,6 +317,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public function clearIndex(bool $optimize = true): UpdateResult
     {
+        print 'test';
         $update = $this->getSolrClient()->createUpdate();
         $update->addDeleteQuery('*:*');
         $update->addCommit();
