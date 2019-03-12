@@ -154,7 +154,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         string $direction = Query::SORT_ASC
     ): SearchServiceInterface;
 
-    public function deleteDocument(object $entity, bool $optimize = false): UpdateResult
+    public function deleteDocument($entity, bool $optimize = false): UpdateResult
     {
         if (\method_exists($entity, 'getResourceId')) {
             $update = $this->getSolrClient()->createUpdate();
