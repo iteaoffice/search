@@ -1,19 +1,21 @@
 {% do headTitle().append(translate("txt-search")) %}
 
-{% do form.prepare() %}
+<div class="container">
+    <h1>{{ translate("txt-site-search") }}</h1>
 
-{{ form().openTag(form)|raw }}
-
-<div class="col-md-6">
-    <div class="input-group">
+    {% do form.prepare() %}
+    {{ form().openTag(form)|raw }}
+    <div class="input-group mb-3">
         {{ formelement(form.get('q')) }}
-        <span class="input-group-btn">
-        {{ formelement(form.get('submit')) }}
-      </span>
+        <div class="input-group-append">
+            {{ formelement(form.get('submit')) }}
+        </div>
     </div>
+    {{ form().closeTag()|raw }}
+
+    <gcse:searchresults-only></gcse:searchresults-only>
 </div>
 
-{{ form().closeTag()|raw }}
 
 <script type="text/javascript">
     (function () {
@@ -27,4 +29,4 @@
         s.parentNode.insertBefore(gcse, s);
     })();
 </script>
-<gcse:searchresults-only></gcse:searchresults-only>
+

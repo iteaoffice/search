@@ -21,7 +21,7 @@ use Zend\View\Model\ViewModel;
  */
 final class IndexController extends AbstractActionController
 {
-    protected $config = [];
+    private $config = [];
 
     public function __construct(array $config)
     {

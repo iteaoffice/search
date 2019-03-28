@@ -15,36 +15,38 @@ namespace Search\Form;
 use Zend\Form\Form;
 
 /**
+ * Class Search
  *
+ * @package Search\Form
  */
-class Search extends Form
+final class Search extends Form
 {
-    /**
-     * Class constructor.
-     */
     public function __construct()
     {
         parent::__construct();
         $this->setAttribute('method', 'get');
         $this->setAttribute('action', 'search');
-        $this->setAttribute('class', 'form-inline');
-        $this->add([
-            'type'       => 'Zend\Form\Element\Text',
-            'name'       => 'q',
-            'attributes' => [
-                'label'       => 'search',
-                'class'       => 'form-control',
-                'id'          => "search",
-                'placeholder' => _("txt-site-search"),
-            ],
-        ]);
-        $this->add([
-            'type'       => 'Zend\Form\Element\Submit',
-            'name'       => 'submit',
-            'attributes' => [
-                'class' => "btn btn-primary",
-                'value' => _("txt-search"),
-            ],
-        ]);
+        $this->add(
+            [
+                'type'       => 'Zend\Form\Element\Text',
+                'name'       => 'q',
+                'attributes' => [
+                    'label'       => 'search',
+                    'class'       => 'form-control col-6',
+                    'id'          => "search",
+                    'placeholder' => _("txt-site-search"),
+                ],
+            ]
+        );
+        $this->add(
+            [
+                'type'       => 'Zend\Form\Element\Submit',
+                'name'       => 'submit',
+                'attributes' => [
+                    'class' => "btn btn-primary",
+                    'value' => _("txt-search"),
+                ],
+            ]
+        );
     }
 }
