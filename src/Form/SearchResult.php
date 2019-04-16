@@ -18,6 +18,13 @@ use Zend\Form\Element;
 use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
+use function array_filter;
+use function array_reverse;
+use function array_search;
+use function count;
+use function http_build_query;
+use function in_array;
+use function sprintf;
 
 /**
  * Class SearchResult
@@ -94,11 +101,11 @@ final class SearchResult extends Form
                 'name'    => 'dateInterval',
                 'options' => [
                     'value_options' => [
-                        'P3M'   => _("txt-last-3-months"),
-                        'P6M'   => _("txt-last-6-months"),
-                        'P12M'  => _("txt-last-year"),
-                        'older' => _("txt-older-than-one-year"),
-                        'all'   => _("txt-all-results"),
+                        'P3M'   => _('txt-last-3-months'),
+                        'P6M'   => _('txt-last-6-months'),
+                        'P12M'  => _('txt-last-year'),
+                        'older' => _('txt-older-than-one-year'),
+                        'all'   => _('txt-all-results'),
                     ],
                     'allow_empty'   => true,
                     'empty_option'  => '-- Select a period',
@@ -161,16 +168,16 @@ final class SearchResult extends Form
         foreach ($facetSet->getFacets() as $facetName => $facet) {
             $multiOptions = [];
             foreach ($facetSetResult->getFacets()[$facetName] as $value => $count) {
-                $title = $this->parseTitleFromFacetName($facetName, (string) $value);
+                $title = $this->parseTitleFromFacetName($facetName, (string)$value);
 
-                $multiOptions[$value] = \sprintf('%s [%s]', $title, $count);
+                $multiOptions[$value] = sprintf('%s [%s]', $title, $count);
             }
 
-            if (\in_array($facetName, $reverse, true)) {
-                $multiOptions = \array_reverse($multiOptions, true);
+            if (in_array($facetName, $reverse, true)) {
+                $multiOptions = array_reverse($multiOptions, true);
             }
 
-            if (\count($multiOptions) > 0) {
+            if (count($multiOptions) > 0) {
                 $facetElement = new MultiCheckbox();
                 $facetElement->setName($facet->getOptions()['field']);
                 if (isset($this->facetLabels[$facetName])) {
@@ -275,7 +282,7 @@ final class SearchResult extends Form
         if ('' !== $this->data['query']) {
             $badges[] = [
                 'facet'          => $this->data['query'],
-                'facetArguments' => \http_build_query(
+                'facetArguments' => http_build_query(
                     [
                         'facet' => $this->data['facet']
                     ]
@@ -284,15 +291,15 @@ final class SearchResult extends Form
         }
         foreach ($this->data['facet'] as $facetName => $facets) {
             foreach ($facets as $facet) {
-                //Remaining facets are all facets wheren the current facet value is filtered out
+                //Remaining facets are all facets where the current facet value is filtered out
                 $remainingFacets = $this->data['facet'];
 
-                if (($key = \array_search($facet, $remainingFacets[$facetName], true)) !== false) {
+                if (($key = array_search($facet, $remainingFacets[$facetName], true)) !== false) {
                     unset($remainingFacets[$facetName][$key]);
                 }
                 $badges[] = [
                     'facet'          => $facet,
-                    'facetArguments' => \http_build_query(
+                    'facetArguments' => http_build_query(
                         [
                             'query' => $this->data['query'],
                             'facet' => $remainingFacets
@@ -308,10 +315,10 @@ final class SearchResult extends Form
     public function getFilteredData(): array
     {
         // Remove order and direction from the GET params to prevent duplication
-        return \array_filter(
+        return array_filter(
             $this->data,
-            function ($key) {
-                return !\in_array($key, ['order', 'direction'], true);
+            static function ($key) {
+                return !in_array($key, ['order', 'direction'], true);
             },
             ARRAY_FILTER_USE_KEY
         );

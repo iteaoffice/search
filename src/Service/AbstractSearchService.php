@@ -13,11 +13,16 @@ declare(strict_types=1);
 namespace Search\Service;
 
 use Solarium\Client;
+use Solarium\Core\Query\AbstractQuery;
 use Solarium\Exception\HttpException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
-use Solarium\Core\Query\AbstractQuery;
+use function count;
+use function preg_match;
+use function preg_match_all;
+use function strtolower;
+use function substr;
 
 abstract class AbstractSearchService implements SearchServiceInterface
 {
@@ -25,13 +30,13 @@ abstract class AbstractSearchService implements SearchServiceInterface
     public const QUERY_TERM_BOOST = 30;
     public const SOLR_CONNECTION = 'default';
     /**
-     * @var Client
-     */
-    private $solrClient;
-    /**
      * @var Query
      */
     protected $query;
+    /**
+     * @var Client
+     */
+    private $solrClient;
     /**
      * @var array
      */
@@ -41,14 +46,15 @@ abstract class AbstractSearchService implements SearchServiceInterface
     {
         $this->config = $config;
     }
-    
+
     public static function parseQuery(
         string $searchTerm,
         array $matchFields,
         string $operator = Query::QUERY_OPERATOR_OR
     ): string {
+        $searchTerm = strtolower($searchTerm);
         // ((?:\w+-)*\w+) matches both regular words and words-with-hypens
-        \preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
+        preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
 
         if (isset($searchParts[0])) {
             $searchParts = $searchParts[0];
@@ -61,7 +67,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         $parseTerm = function (string $field, string $searchTerm): string {
             // Exclude term
-            if (\substr($searchTerm, 0, 1) === '-') {
+            if (substr($searchTerm, 0, 1) === '-') {
                 return '-' . $field . ':' . substr($searchTerm, 1);
             } elseif (empty($searchTerm)) { // Empty search
                 return $field . ':*';
@@ -78,7 +84,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $partIteration = 1;
                 foreach ($searchParts as $key => $part) {
                     // Previous part is a + or the part is an excluded term (-term)
-                    if ((isset($searchParts[($key - 1)]) && ($searchParts[($key - 1)] === '+'))
+                    if ((isset($searchParts[$key - 1]) && ($searchParts[$key - 1] === '+'))
                         || preg_match('/^-.+$/', $part)
                     ) {
                         $query .= ' ' . Query::QUERY_OPERATOR_AND . ' ';
@@ -206,7 +212,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         return $this->getSolrClient()->update($update);
     }
- 
+
     public function addFilterQuery(string $key, $value): Query
     {
         return $this->getQuery()->addFilterQuery(
@@ -289,6 +295,20 @@ abstract class AbstractSearchService implements SearchServiceInterface
         echo "\nDuration: \033[1;33m" . gmdate("H:i:s", \time() - $start) . "\033[0m\n\n";
     }
 
+    public function clearIndex(bool $optimize = true): UpdateResult
+    {
+        print 'test';
+        $update = $this->getSolrClient()->createUpdate();
+        $update->addDeleteQuery('*:*');
+        $update->addCommit();
+        $result = $this->getSolrClient()->update($update);
+        if ($optimize) {
+            $this->optimizeIndex();
+        }
+
+        return $result;
+    }
+
     public function executeUpdateDocument(AbstractQuery $update): ?UpdateResult
     {
         $result = null;
@@ -310,20 +330,6 @@ abstract class AbstractSearchService implements SearchServiceInterface
             if (null !== $fileName && is_file($fileName)) {
                 \unlink($fileName);
             }
-        }
-
-        return $result;
-    }
-
-    public function clearIndex(bool $optimize = true): UpdateResult
-    {
-        print 'test';
-        $update = $this->getSolrClient()->createUpdate();
-        $update->addDeleteQuery('*:*');
-        $update->addCommit();
-        $result = $this->getSolrClient()->update($update);
-        if ($optimize) {
-            $this->optimizeIndex();
         }
 
         return $result;
