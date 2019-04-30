@@ -8,14 +8,10 @@
  * @copyright Copyright (c) 2004-2017 ITEA Office (http://itea3.org)
  */
 return [
-    'google'        => [
+    'google' => [
         'cx' => '009339216969913709813:g_lfsuqxjz0', //itea
     ],
-    'configuration' => [
-        'solr_default' => [
-            'select_path' => '/select',
-            'update_path' => '/update',
-            'resultClass' => '\SolrClient\Query\Result',
-        ],
-    ],
+    'solr'   => [
+        'host' => 'search'
+    ]
 ];
