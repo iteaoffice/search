@@ -15,7 +15,7 @@ return [
     'console' => [
         'router' => [
             'routes' => [
-                'cli-search-update'                         => [
+                'cli-search-update' => [
                     'options' => [
                         'route'    => 'search update <entity>',
                         'defaults' => [
@@ -24,30 +24,12 @@ return [
                         ],
                     ],
                 ],
-                'cli-search-reset'                          => [
+                'cli-search-reset'  => [
                     'options' => [
                         'route'    => 'search reset <entity>',
                         'defaults' => [
                             'controller' => Controller\ConsoleController::class,
                             'action'     => 'search-reset',
-                        ],
-                    ],
-                ],
-                'cli-search-reset-registration-by-meeting'  => [
-                    'options' => [
-                        'route'    => 'search reset-registration <meeting>',
-                        'defaults' => [
-                            'controller' => Controller\ConsoleController::class,
-                            'action'     => 'reset-registration-by-meeting',
-                        ],
-                    ],
-                ],
-                'cli-search-update-registration-by-meeting' => [
-                    'options' => [
-                        'route'    => 'search update-registration <meeting>',
-                        'defaults' => [
-                            'controller' => Controller\ConsoleController::class,
-                            'action'     => 'update-registration-by-meeting',
                         ],
                     ],
                 ],

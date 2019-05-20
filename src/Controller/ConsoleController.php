@@ -39,21 +39,11 @@ final class ConsoleController extends AbstractActionController
 
     public function searchUpdateAction(): void
     {
-        $this->consoleService->resetIndex((string)$this->params('entity'), false);
+        $this->consoleService->resetIndex((string)$this->params('entity'));
     }
 
     public function searchResetAction(): void
     {
         $this->consoleService->resetIndex((string)$this->params('entity'), true);
-    }
-
-    public function resetRegistrationByMeetingAction(): void
-    {
-        $this->consoleService->updateRegistrationByMeeting((int) $this->params('meeting'), true);
-    }
-
-    public function updateRegistrationByMeetingAction(): void
-    {
-        $this->consoleService->updateRegistrationByMeeting((int) $this->params('meeting'), false);
     }
 }

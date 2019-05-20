@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Search\Form;
 
 use Zend\Form\Form;
+use Zend\Form\Element\Submit;
+use Zend\Form\Element\Text;
 
 /**
  * Class Search
@@ -28,7 +30,7 @@ final class Search extends Form
         $this->setAttribute('action', 'search');
         $this->add(
             [
-                'type'       => 'Zend\Form\Element\Text',
+                'type'       => Text::class,
                 'name'       => 'q',
                 'attributes' => [
                     'label'       => 'search',
@@ -40,7 +42,7 @@ final class Search extends Form
         );
         $this->add(
             [
-                'type'       => 'Zend\Form\Element\Submit',
+                'type'       => Submit::class,
                 'name'       => 'submit',
                 'attributes' => [
                     'class' => "btn btn-primary",

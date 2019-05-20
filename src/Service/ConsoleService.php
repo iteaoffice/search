@@ -205,9 +205,6 @@ class ConsoleService
             case 'invoice':
                 $this->invoiceService->updateCollectionInSearchEngine($clearIndex);
                 break;
-            case 'affiliation':
-                $this->affiliationService->updateCollectionInSearchEngine($clearIndex);
-                break;
             case 'calendar':
                 $this->calendarService->updateCollectionInSearchEngine($clearIndex);
                 break;
@@ -240,7 +237,6 @@ class ConsoleService
                 $this->resultService->updateCollectionInSearchEngine($clearIndex);
                 $this->publicationService->updateCollectionInSearchEngine($clearIndex);
                 $this->invoiceService->updateCollectionInSearchEngine($clearIndex);
-                $this->affiliationService->updateCollectionInSearchEngine($clearIndex);
                 $this->calendarService->updateCollectionInSearchEngine($clearIndex);
                 $this->newsService->updateCollectionInSearchEngine($clearIndex);
                 $this->blogService->updateCollectionInSearchEngine($clearIndex);
@@ -251,10 +247,5 @@ class ConsoleService
             default:
                 throw new \InvalidArgumentException(sprintf("%s is incorrect", $index));
         }
-    }
-
-    public function updateRegistrationByMeeting(int $meetingId, bool $clearIndex = false): void
-    {
-        $this->registrationService->updateRegistrationByMeeting($meetingId, $clearIndex);
     }
 }

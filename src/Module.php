@@ -38,25 +38,15 @@ class Module implements
         return [
             'Search management',
             // Describe available commands
-            'search reset <entity>'                => 'Reset the search index (wipe and rebuild index)',
+            'search reset <entity>'  => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
                 'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, result, impact-stream, action, publication, invoice, contact, profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
-            'search update <entity>'               => 'Update the search index',
+            'search update <entity>' => 'Update the search index',
             [
                 '<entity>',
                 'Choose an entity to update: project, version, roadmap, version-document, workpackage-document, result, impact-stream, action, publication, invoice, contact, profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
-            ],
-            'search reset-registration <meeting>'  => 'Reset the registrations of a meeting',
-            [
-                '<meeting>',
-                'Give the ID of the meeting',
-            ],
-            'search update-registration <meeting>' => 'Update the registrations of a meeting',
-            [
-                '<meeting>',
-                'Give the ID of the meeting',
             ],
         ];
     }

@@ -14,27 +14,27 @@ namespace Search\Service;
 
 use DateInterval;
 use DateTime;
-use function defined;
-use Exception;
-use function get_class;
-use function json_decode;
-use function method_exists;
+use RuntimeException;
 use Solarium\Client;
 use Solarium\Core\Query\AbstractQuery;
 use Solarium\Exception\HttpException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
+use stdClass;
+use Throwable;
+use Zend\Json\Json;
 use function count;
+use function defined;
+use function get_class;
+use function method_exists;
 use function preg_match;
 use function preg_match_all;
 use function sprintf;
-use stdClass;
 use function str_replace;
 use function strtolower;
 use function substr;
 use function sys_get_temp_dir;
-use Throwable;
 use function time;
 use function unlink;
 
@@ -132,7 +132,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public static function parseTempFile(object $entity): string
     {
-        return sys_get_temp_dir() . '/solr_' . str_replace('\\', '_', \strtolower(get_class($entity))) . '_'
+        return sys_get_temp_dir() . '/solr_' . str_replace('\\', '_', strtolower(get_class($entity))) . '_'
             . $entity->getId();
     }
 
@@ -190,7 +190,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         $message = get_class($entity) . ' has no method getResourceId. ' . get_called_class()
             . ' should implement a custom deleteDocument method.';
-        throw new Exception($message);
+        throw new RuntimeException($message);
     }
 
     public function getSolrClient(): Client
@@ -279,7 +279,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
 
                 if (!empty($responseBody)) {
-                    $response = json_decode($responseBody);
+                    $response = Json::decode($responseBody);
                     if (isset($response->responseHeader)) {
                         $template .= "Solr HTTP response code: \033[1;33m" . $response->responseHeader->status
                             . "\033[0m\n";
@@ -332,7 +332,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $update->addCommit();
             }
             $result = $this->getSolrClient()->update($update);
-        } catch (\Solarium\Exception\HttpException $e) {
+        } catch (HttpException $e) {
             throw $e;
         } finally {
             // Garbage collection, only needed when we are dealing with an extract update
