@@ -79,7 +79,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $fieldCount = count($matchFields);
         $searchPartCount = count($searchParts);
 
-        $parseTerm = function (string $field, string $searchTerm): string {
+        $parseTerm = static function (string $field, string $searchTerm): string {
             // Exclude term
             if (substr($searchTerm, 0, 1) === '-') {
                 return '-' . $field . ':' . substr($searchTerm, 1);
@@ -261,7 +261,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $errors = 0;
         echo "\n";
         if ($clear) {
-            echo "Clearing index...";
+            echo 'Clearing index...';
             $this->clearIndex();
             echo " \033[1;33mDone!\033[0m\n";
         }
@@ -270,7 +270,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         foreach (array_reverse($entityCollection) as $entity) {
             try {
                 $this->executeUpdateDocument($entity);
-                echo ".";
+                echo '.';
             } catch (HttpException $e) {
                 $errors++;
                 $responseBody = $e->getBody();
@@ -306,7 +306,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         echo "\n\n===================================";
         echo "\nDocuments processed: \033[1;33m" . count($entityCollection) . "\033[0m";
         echo "\nErrors: \033[1;33m" . $errors . "\033[0m";
-        echo "\nDuration: \033[1;33m" . gmdate("H:i:s", time() - $start) . "\033[0m\n\n";
+        echo "\nDuration: \033[1;33m" . gmdate('H:i:s', time() - $start) . "\033[0m\n\n";
     }
 
     public function clearIndex(bool $optimize = true): UpdateResult
