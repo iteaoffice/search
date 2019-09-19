@@ -15,7 +15,7 @@ namespace Search\Model;
 class FacetSearchResult
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $numFound;
     /**

@@ -19,7 +19,7 @@ class FacetResult
      */
     protected $name;
     /**
-     * @var integer
+     * @var int
      */
     protected $count;
 
