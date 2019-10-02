@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Search\Form;
 
-use Zend\Form\Form;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
+use Zend\Form\Form;
 
 /**
  * Class Search

@@ -29,7 +29,7 @@ class Facet
     protected $facetResults;
 
     /**
-     * @return \Search\Model\FacetResult[]
+     * @return FacetResult[]
      */
     public function getFacetResults()
     {
@@ -37,7 +37,7 @@ class Facet
     }
 
     /**
-     * @param \Search\Model\FacetResult[] $facetResults
+     * @param FacetResult[] $facetResults
      */
     public function setFacetResults(
         $facetResults

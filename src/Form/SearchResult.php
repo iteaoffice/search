@@ -25,6 +25,9 @@ use function count;
 use function http_build_query;
 use function in_array;
 use function sprintf;
+use function str_replace;
+use function strtolower;
+use function ucfirst;
 
 /**
  * Class SearchResult
@@ -183,7 +186,7 @@ final class SearchResult extends Form
                 if (isset($this->facetLabels[$facetName])) {
                     $facetElement->setLabel($this->facetLabels[$facetName]);
                 } else {
-                    $facetElement->setLabel(\ucfirst(\str_replace('_', ' ', $facetName)));
+                    $facetElement->setLabel(ucfirst(str_replace('_', ' ', $facetName)));
                 }
                 $facetElement->setValueOptions($multiOptions);
                 $facetElement->setLabelOption('escape', false);
@@ -202,7 +205,7 @@ final class SearchResult extends Form
             return $value;
         }
 
-        switch (\strtolower($value)) {
+        switch (strtolower($value)) {
             case 'application/pdf':
             case 'application/postscript':
                 return 'PDF';

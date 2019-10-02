@@ -22,6 +22,7 @@ use Calendar\Service\CalendarService;
 use Contact\Service\ContactService;
 use Event\Service\RegistrationService;
 use General\Service\CountryService;
+use InvalidArgumentException;
 use Invoice\Service\InvoiceService;
 use News\Service\BlogService;
 use News\Service\NewsService;
@@ -245,7 +246,7 @@ class ConsoleService
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf("%s is incorrect", $index));
+                throw new InvalidArgumentException(sprintf("%s is incorrect", $index));
         }
     }
 }

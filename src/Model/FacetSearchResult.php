@@ -44,7 +44,7 @@ class FacetSearchResult
     }
 
     /**
-     * @return \Search\Model\Facet[]
+     * @return Facet[]
      */
     public function getFacets()
     {
@@ -52,7 +52,7 @@ class FacetSearchResult
     }
 
     /**
-     * @param \Search\Model\Facet[] $facets
+     * @param Facet[] $facets
      */
     public function setFacets($facets)
     {
