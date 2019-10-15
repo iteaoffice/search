@@ -128,7 +128,7 @@ final class SearchResult extends Form
                 ],
                 'attributes' => [
                     'id'    => 'searchButton',
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-outline-primary',
                 ],
             ]
         );
@@ -139,7 +139,7 @@ final class SearchResult extends Form
                 'name'       => 'submit',
                 'attributes' => [
                     'id'    => 'searchButton',
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-outline-primary',
                     'value' => _('txt-search'),
                 ],
             ]
@@ -154,7 +154,7 @@ final class SearchResult extends Form
                 ],
                 'attributes' => [
                     'id'    => 'resetButton',
-                    'class' => 'btn btn-danger',
+                    'class' => 'btn btn-outline-danger',
                 ],
             ]
         );
