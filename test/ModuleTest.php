@@ -14,7 +14,6 @@ namespace SearchTest;
 
 use Search\Controller\IndexController;
 use Search\Module;
-use Search\View\Handler\SearchHandler;
 use Testing\Util\AbstractServiceTest;
 use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
@@ -62,6 +61,5 @@ class ModuleTest extends AbstractServiceTest
 
             $this->assertInstanceOf($service, $instance);
         }
-
     }
 }
