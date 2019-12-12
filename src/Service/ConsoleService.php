@@ -7,7 +7,7 @@
  * @category    Search
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2018 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
  *
  * @link        http://github.com/iteaoffice/main for the canonical source repository
@@ -45,82 +45,25 @@ use Publication\Service\PublicationService;
  */
 class ConsoleService
 {
-    /**
-     * @var ContactService
-     */
-    private $contactService;
-    /**
-     * @var IdeaService
-     */
-    private $ideaService;
-    /**
-     * @var DescriptionService
-     */
-    private $descriptionService;
-    /**
-     * @var ProjectService
-     */
-    private $projectService;
-    /**
-     * @var VersionService
-     */
-    private $versionService;
-    /**
-     * @var VersionDocumentService
-     */
-    private $versionDocumentService;
-    /**
-     * @var WorkpackageService
-     */
-    private $workpackageService;
-    /**
-     * @var ResultService
-     */
-    private $resultService;
-    /**
-     * @var ActionService
-     */
-    private $actionService;
-    /**
-     * @var PublicationService
-     */
-    private $publicationService;
-    /**
-     * @var InvoiceService
-     */
-    private $invoiceService;
-    /**
-     * @var AffiliationService
-     */
-    private $affiliationService;
-    /**
-     * @var RegistrationService
-     */
-    private $registrationService;
-    /**
-     * @var CalendarService
-     */
-    private $calendarService;
-    /**
-     * @var NewsService
-     */
-    private $newsService;
-    /**
-     * @var BlogService
-     */
-    private $blogService;
-    /**
-     * @var PressService
-     */
-    private $pressService;
-    /**
-     * @var OrganisationService
-     */
-    private $organisationService;
-    /**
-     * @var CountryService
-     */
-    private $countryService;
+    private ContactService $contactService;
+    private IdeaService $ideaService;
+    private DescriptionService $descriptionService;
+    private ProjectService $projectService;
+    private VersionService $versionService;
+    private VersionDocumentService $versionDocumentService;
+    private WorkpackageService $workpackageService;
+    private ResultService $resultService;
+    private ActionService $actionService;
+    private PublicationService $publicationService;
+    private InvoiceService $invoiceService;
+    private AffiliationService $affiliationService;
+    private RegistrationService $registrationService;
+    private CalendarService $calendarService;
+    private NewsService $newsService;
+    private BlogService $blogService;
+    private PressService $pressService;
+    private OrganisationService $organisationService;
+    private CountryService $countryService;
 
     public function __construct(
         ContactService $contactService,
@@ -246,7 +189,7 @@ class ConsoleService
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
             default:
-                throw new InvalidArgumentException(sprintf("%s is incorrect", $index));
+                throw new InvalidArgumentException(sprintf('%s is incorrect', $index));
         }
     }
 }

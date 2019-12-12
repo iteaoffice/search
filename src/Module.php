@@ -6,7 +6,7 @@
  *
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2018 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
  *
 
@@ -24,7 +24,7 @@ use Zend\ModuleManager\Feature;
  *
  * @package Search
  */
-class Module implements
+final class Module implements
     Feature\ConfigProviderInterface,
     Feature\ConsoleUsageProviderInterface
 {
@@ -38,7 +38,7 @@ class Module implements
         return [
             'Search management',
             // Describe available commands
-            'search reset <entity>'  => 'Reset the search index (wipe and rebuild index)',
+            'search reset <entity>' => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
                 'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, result, impact-stream, action, publication, invoice, contact, profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',

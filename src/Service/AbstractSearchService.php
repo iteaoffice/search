@@ -43,18 +43,10 @@ abstract class AbstractSearchService implements SearchServiceInterface
     public const DATE_SOLR = 'Y-m-d\TH:i:s\Z';
     public const QUERY_TERM_BOOST = 30;
     public const SOLR_CONNECTION = 'default';
-    /**
-     * @var Query
-     */
-    protected $query;
-    /**
-     * @var Client
-     */
-    private $solrClient;
-    /**
-     * @var array
-     */
-    private $config;
+
+    protected Query $query;
+    private ? Client $solrClient = null;
+    private array $config;
 
     public function __construct(array $config)
     {
@@ -65,7 +57,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         string $searchTerm,
         array $matchFields,
         string $operator = Query::QUERY_OPERATOR_OR
-    ): string {
+    ) : string {
         $searchTerm = strtolower($searchTerm);
         // ((?:\w+-)*\w+) matches both regular words and words-with-hypens
         preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
@@ -231,9 +223,9 @@ abstract class AbstractSearchService implements SearchServiceInterface
     {
         return $this->getQuery()->addFilterQuery(
             [
-                'key'   => $key,
+                'key' => $key,
                 'query' => $key . ':(' . $value . ')',
-                'tag'   => $key,
+                'tag' => $key,
             ]
         );
     }

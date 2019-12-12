@@ -14,29 +14,18 @@ namespace Search\Paginator\Adapter;
 
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
+use Solarium\QueryType\Select\Result\Result;
 use Zend\Paginator\Adapter\AdapterInterface;
 
 /**
- * Solarium result paginator.
- *
- * @license MIT
+ * Class SolariumPaginator
+ * @package Search\Paginator\Adapter
  */
-class SolariumPaginator implements AdapterInterface
+final class SolariumPaginator implements AdapterInterface
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * @var Query
-     */
-    protected $query;
-
-    /**
-     * @var int
-     */
-    protected $count;
+    protected Client $client;
+    protected Query $query;
+    protected ? int $count = null;
 
     public function __construct(Client $client, Query $query)
     {
@@ -44,7 +33,7 @@ class SolariumPaginator implements AdapterInterface
         $this->query = $query;
     }
 
-    public function count()
+    public function count() : ?int
     {
         if (null === $this->count) {
             $this->getItems(0, 0);
@@ -53,7 +42,7 @@ class SolariumPaginator implements AdapterInterface
         return $this->count;
     }
 
-    public function getItems($offset, $itemCountPerPage)
+    public function getItems($offset, $itemCountPerPage): Result
     {
         $this->query->setStart($offset);
         $this->query->setRows($itemCountPerPage);

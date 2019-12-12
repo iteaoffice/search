@@ -17,11 +17,12 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
- * @category    Search
+ * Class IndexController
+ * @package Search\Controller
  */
 final class IndexController extends AbstractActionController
 {
-    private $config = [];
+    private array $config = [];
 
     public function __construct(array $config)
     {

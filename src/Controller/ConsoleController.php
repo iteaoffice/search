@@ -7,7 +7,7 @@
  * @category    Search
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2018 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
  *
  * @link        http://github.com/iteaoffice/main for the canonical source repository
@@ -27,10 +27,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 final class ConsoleController extends AbstractActionController
 {
-    /**
-     * @var ConsoleService
-     */
-    private $consoleService;
+    private ConsoleService $consoleService;
 
     public function __construct(ConsoleService $consoleService)
     {

@@ -35,8 +35,8 @@ final class Search extends Form
                 'attributes' => [
                     'label'       => 'search',
                     'class'       => 'form-control col-6',
-                    'id'          => "search",
-                    'placeholder' => _("txt-site-search"),
+                    'id'          => 'search',
+                    'placeholder' => _('txt-site-search'),
                 ],
             ]
         );
@@ -45,8 +45,8 @@ final class Search extends Form
                 'type'       => Submit::class,
                 'name'       => 'submit',
                 'attributes' => [
-                    'class' => "btn btn-primary",
-                    'value' => _("txt-search"),
+                    'class' => 'btn btn-primary',
+                    'value' => _('txt-search'),
                 ],
             ]
         );
