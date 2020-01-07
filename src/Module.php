@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Search;
 
-use Zend\Console\Adapter\AdapterInterface;
-use Zend\ModuleManager\Feature;
+use Laminas\Console\Adapter\AdapterInterface;
+use Laminas\ModuleManager\Feature;
 
 /**
  * Class Module
@@ -41,12 +41,16 @@ final class Module implements
             'search reset <entity>' => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
-                'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, result, impact-stream, action, publication, invoice, contact, profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
+                'Choose an entity to reset: project, version, roadmap, version-document, 
+                workpackage-document, result, impact-stream, action, publication, invoice, contact, 
+                profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
             'search update <entity>' => 'Update the search index',
             [
                 '<entity>',
-                'Choose an entity to update: project, version, roadmap, version-document, workpackage-document, result, impact-stream, action, publication, invoice, contact, profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
+                'Choose an entity to update: project, version, roadmap, version-document, 
+                workpackage-document, result, impact-stream, action, publication, invoice, contact, 
+                profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
         ];
     }

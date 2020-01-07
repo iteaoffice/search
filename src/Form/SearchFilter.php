@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Search\Form;
 
-use Zend\Form\Element\Search;
-use Zend\Form\Element\Submit;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element\Search;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 
 /**
  * Class SearchFilter

@@ -15,7 +15,7 @@ namespace SearchTest;
 use Search\Controller\IndexController;
 use Search\Module;
 use Testing\Util\AbstractServiceTest;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 /**
  * Class GeneralTest

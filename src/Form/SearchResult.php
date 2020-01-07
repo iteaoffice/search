@@ -14,10 +14,10 @@ namespace Search\Form;
 
 use Solarium\Component\FacetSet as FacetSetComponent;
 use Solarium\Component\Result\FacetSet as FacetSetResult;
-use Zend\Form\Element;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
+use Laminas\Form\Element;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 use function array_filter;
 use function array_reverse;
 use function array_search;
@@ -58,7 +58,7 @@ final class SearchResult extends Form
         );
 
         // Add the field selection
-        if (!empty($searchFields)) {
+        if (! empty($searchFields)) {
             $this->add(
                 [
                     'type'       => Element\MultiCheckbox::class,
@@ -321,7 +321,7 @@ final class SearchResult extends Form
         return array_filter(
             $this->data,
             static function ($key) {
-                return !in_array($key, ['order', 'direction'], true);
+                return ! in_array($key, ['order', 'direction'], true);
             },
             ARRAY_FILTER_USE_KEY
         );

@@ -23,7 +23,7 @@ use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
 use stdClass;
 use Throwable;
-use Zend\Json\Json;
+use Laminas\Json\Json;
 use function count;
 use function defined;
 use function get_class;
@@ -191,7 +191,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
             $params = $this->config['solr']['connection'][static::SOLR_CONNECTION] ?? [];
 
             //Only change the core when this is different than the already given core
-            if (!isset($params['endpoint']['server']['core'])) {
+            if (! isset($params['endpoint']['server']['core'])) {
                 $params['endpoint']['server']['core'] = static::SOLR_CONNECTION;
             }
 
@@ -270,7 +270,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $template .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
 
 
-                if (!empty($responseBody)) {
+                if (! empty($responseBody)) {
                     $response = Json::decode($responseBody);
                     if (isset($response->responseHeader)) {
                         $template .= "Solr HTTP response code: \033[1;33m" . $response->responseHeader->status

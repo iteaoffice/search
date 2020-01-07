@@ -31,7 +31,7 @@ use Project\Service\VersionDocumentService;
 use Project\Service\VersionService;
 use Project\Service\WorkpackageService;
 use Publication\Service\PublicationService;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 return [
     ConfigAbstractFactory::class => [

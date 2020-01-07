@@ -17,9 +17,9 @@ namespace Search\Controller\Plugin;
 
 use Search\Service\AbstractSearchService;
 use Solarium\QueryType\Select\Result\Document;
-use Zend\Http\Headers;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Http\Headers;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 
 /**
  * Class CsvExport

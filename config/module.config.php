@@ -10,8 +10,8 @@
 
 use Search\Controller;
 use Search\Service;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
-use Zend\Stdlib;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\Stdlib;
 
 $config = [
     'controllers'        => [

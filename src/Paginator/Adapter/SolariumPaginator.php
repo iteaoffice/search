@@ -15,7 +15,7 @@ namespace Search\Paginator\Adapter;
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
-use Zend\Paginator\Adapter\AdapterInterface;
+use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
  * Class SolariumPaginator

@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace Search\Controller;
 
 use Search\Service\ConsoleService;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * final class ConsoleController
