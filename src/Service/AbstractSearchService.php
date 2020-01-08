@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
@@ -24,6 +25,7 @@ use Solarium\QueryType\Update\Result as UpdateResult;
 use stdClass;
 use Throwable;
 use Laminas\Json\Json;
+
 use function count;
 use function defined;
 use function get_class;
@@ -45,7 +47,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
     public const SOLR_CONNECTION = 'default';
 
     protected Query $query;
-    private ? Client $solrClient = null;
+    private ?Client $solrClient = null;
     private array $config;
 
     public function __construct(array $config)
@@ -57,7 +59,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         string $searchTerm,
         array $matchFields,
         string $operator = Query::QUERY_OPERATOR_OR
-    ) : string {
+    ): string {
         $searchTerm = strtolower($searchTerm);
         // ((?:\w+-)*\w+) matches both regular words and words-with-hypens
         preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
@@ -90,7 +92,8 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $partIteration = 1;
                 foreach ($searchParts as $key => $part) {
                     // Previous part is a + or the part is an excluded term (-term)
-                    if ((isset($searchParts[$key - 1]) && ($searchParts[$key - 1] === '+'))
+                    if (
+                        (isset($searchParts[$key - 1]) && ($searchParts[$key - 1] === '+'))
                         || preg_match('/^-.+$/', $part)
                     ) {
                         $query .= ' ' . Query::QUERY_OPERATOR_AND . ' ';

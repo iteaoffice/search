@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
@@ -25,7 +26,7 @@ final class SolariumPaginator implements AdapterInterface
 {
     protected Client $client;
     protected Query $query;
-    protected ? int $count = null;
+    protected ?int $count = null;
 
     public function __construct(Client $client, Query $query)
     {
@@ -33,7 +34,7 @@ final class SolariumPaginator implements AdapterInterface
         $this->query = $query;
     }
 
-    public function count() : ?int
+    public function count(): ?int
     {
         if (null === $this->count) {
             $this->getItems(0, 0);

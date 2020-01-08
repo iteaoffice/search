@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA Office copyright message placeholder
  *
@@ -18,6 +19,7 @@ use Laminas\Form\Element;
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+
 use function array_filter;
 use function array_reverse;
 use function array_search;
