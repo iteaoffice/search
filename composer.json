@@ -1,44 +1,43 @@
 {
-    "name": "iteaoffice/search",
-    "type": "library",
-    "license": "proprietary",
-    "description": "Code to manage search",
-    "keywords": [
-        "search"
-    ],
-    "homepage": "https://itea3.org",
-    "authors": [
-        {
-            "name": "Johan van der Heide",
-            "email": "johan.van.der.heide@itea3.org"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": "^7.4",
-        "laminas/laminas-mvc": "^3.1",
-        "laminas/laminas-mvc-form": "^1.0.0",
-        "solarium/solarium": "5.*",
-        "phpoffice/phppresentation": "^0.9",
-        "laminas/laminas-dependency-plugin": "^0.2"
-    },
-    "require-dev": {
-        "iteaoffice/testing": "^1.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "Search\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ProjectTest\\": "test/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev",
-            "dev-develop": "1.1.x-dev"
-        }
+  "name": "iteaoffice/search",
+  "type": "library",
+  "license": "proprietary",
+  "description": "Code to manage search",
+  "keywords": [
+    "search"
+  ],
+  "homepage": "https://itea3.org",
+  "authors": [
+    {
+      "name": "Johan van der Heide",
+      "email": "johan.van.der.heide@itea3.org"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4",
+    "laminas/laminas-mvc": "^3.1",
+    "laminas/laminas-mvc-form": "^1.0.0",
+    "solarium/solarium": "5.*",
+    "phpoffice/phppresentation": "^0.9"
+  },
+  "require-dev": {
+    "iteaoffice/testing": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Search\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SearchTest\\": "test/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0-DEV",
+      "dev-develop": "2.1-DEV"
+    }
+  }
 }
