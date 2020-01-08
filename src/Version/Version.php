@@ -17,5 +17,5 @@ namespace Search\Version;
  */
 final class Version
 {
-    public const VERSION = '2.0.1';
+    public const VERSION = '2.0.2-DEV';
 }
