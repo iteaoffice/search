@@ -22,7 +22,7 @@
     "phpoffice/phppresentation": "^0.9"
   },
   "require-dev": {
-    "iteaoffice/testing": "^2.1"
+    "iteaoffice/testing": "2.*"
   },
   "autoload": {
     "psr-4": {
@@ -36,8 +36,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0-DEV",
-      "dev-develop": "2.1-DEV"
+      "dev-master": "2.0-dev",
+      "dev-develop": "2.1-dev"
     }
   }
 }
