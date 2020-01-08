@@ -1,11 +1,12 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
  * @category  Search
  *
  * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2004-2017 ITEA Office (https://itea3.org)
+ * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
  */
 
 declare(strict_types=1);
@@ -13,15 +14,16 @@ declare(strict_types=1);
 namespace Search\Controller;
 
 use Search\Form\Search;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 /**
- * @category    Search
+ * Class IndexController
+ * @package Search\Controller
  */
 final class IndexController extends AbstractActionController
 {
-    protected $config = [];
+    private array $config = [];
 
     public function __construct(array $config)
     {

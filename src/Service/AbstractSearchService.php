@@ -1,54 +1,68 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
  * @category  Search
  *
  * @author    Bart van Eijck <bart.van.eijck@itea3.org>
- * @copyright Copyright (c) 2004-2017 ITEA Office (https://itea3.org)
+ * @copyright Copyright (c) 2019 ITEA Office (https://itea3.org)
  */
 
 declare(strict_types=1);
 
 namespace Search\Service;
 
+use DateInterval;
+use DateTime;
+use RuntimeException;
 use Solarium\Client;
+use Solarium\Core\Query\AbstractQuery;
 use Solarium\Exception\HttpException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
-use Solarium\Core\Query\AbstractQuery;
+use stdClass;
+use Throwable;
+use Laminas\Json\Json;
+
+use function count;
+use function defined;
+use function get_class;
+use function method_exists;
+use function preg_match;
+use function preg_match_all;
+use function sprintf;
+use function str_replace;
+use function strtolower;
+use function substr;
+use function sys_get_temp_dir;
+use function time;
+use function unlink;
 
 abstract class AbstractSearchService implements SearchServiceInterface
 {
     public const DATE_SOLR = 'Y-m-d\TH:i:s\Z';
     public const QUERY_TERM_BOOST = 30;
     public const SOLR_CONNECTION = 'default';
-    /**
-     * @var Client
-     */
-    private $solrClient;
-    /**
-     * @var Query
-     */
-    protected $query;
-    /**
-     * @var array
-     */
-    private $config;
+
+    protected Query $query;
+    private ?Client $solrClient = null;
+    private array $config;
 
     public function __construct(array $config)
     {
         $this->config = $config;
     }
-    
+
     public static function parseQuery(
         string $searchTerm,
         array $matchFields,
         string $operator = Query::QUERY_OPERATOR_OR
     ): string {
+        $searchTerm = strtolower($searchTerm);
         // ((?:\w+-)*\w+) matches both regular words and words-with-hypens
-        \preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
+        preg_match_all('/-?"[^"]+"|\+|-?((?:\w+-)*\w+)/', $searchTerm, $searchParts);
 
         if (isset($searchParts[0])) {
             $searchParts = $searchParts[0];
@@ -59,7 +73,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $fieldCount = count($matchFields);
         $searchPartCount = count($searchParts);
 
-        $parseTerm = function (string $field, string $searchTerm): string {
+        $parseTerm = static function (string $field, string $searchTerm): string {
             // Exclude term
             if (substr($searchTerm, 0, 1) === '-') {
                 return '-' . $field . ':' . substr($searchTerm, 1);
@@ -78,7 +92,8 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $partIteration = 1;
                 foreach ($searchParts as $key => $part) {
                     // Previous part is a + or the part is an excluded term (-term)
-                    if ((isset($searchParts[($key - 1)]) && ($searchParts[($key - 1)] === '+'))
+                    if (
+                        (isset($searchParts[$key - 1]) && ($searchParts[$key - 1] === '+'))
                         || preg_match('/^-.+$/', $part)
                     ) {
                         $query .= ' ' . Query::QUERY_OPERATOR_AND . ' ';
@@ -112,11 +127,11 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public static function parseTempFile(object $entity): string
     {
-        return \sys_get_temp_dir() . '/solr_' . \str_replace('\\', '_', \strtolower(\get_class($entity))) . '_'
+        return sys_get_temp_dir() . '/solr_' . str_replace('\\', '_', strtolower(get_class($entity))) . '_'
             . $entity->getId();
     }
 
-    public function parseDateInterval(array $data): \stdClass
+    public function parseDateInterval(array $data): stdClass
     {
         //Create the date
         $fromDate = null;
@@ -127,20 +142,20 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
             switch ($dateInterval) {
                 case 'older':
-                    $toDate = new \DateTime();
-                    $toDate->sub(new \DateInterval('P12M'));
+                    $toDate = new DateTime();
+                    $toDate->sub(new DateInterval('P12M'));
                     break;
                 case 'P1M':
                 case 'P3M':
                 case 'P6M':
                 case 'P12M':
-                    $fromDate = new \DateTime();
-                    $fromDate->sub(new \DateInterval($dateInterval));
+                    $fromDate = new DateTime();
+                    $fromDate->sub(new DateInterval($dateInterval));
                     break;
             }
         }
 
-        $class = new \stdClass();
+        $class = new stdClass();
         $class->fromDate = $fromDate;
         $class->toDate = $toDate;
 
@@ -154,9 +169,9 @@ abstract class AbstractSearchService implements SearchServiceInterface
         string $direction = Query::SORT_ASC
     ): SearchServiceInterface;
 
-    public function deleteDocument(object $entity, bool $optimize = false): UpdateResult
+    public function deleteDocument($entity, bool $optimize = false): UpdateResult
     {
-        if (\method_exists($entity, 'getResourceId')) {
+        if (method_exists($entity, 'getResourceId')) {
             $update = $this->getSolrClient()->createUpdate();
             $update->addDeleteById($entity->getResourceId());
             $update->addCommit();
@@ -170,21 +185,21 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         $message = get_class($entity) . ' has no method getResourceId. ' . get_called_class()
             . ' should implement a custom deleteDocument method.';
-        throw new \Exception($message);
+        throw new RuntimeException($message);
     }
 
     public function getSolrClient(): Client
     {
-        if (null === $this->solrClient && \defined('static::SOLR_CONNECTION')) {
-            $params = null;
+        if (null === $this->solrClient && defined('static::SOLR_CONNECTION')) {
+            $params = $this->config['solr']['connection'][static::SOLR_CONNECTION] ?? [];
 
-            if (isset($this->config['solr']['connection'][static::SOLR_CONNECTION])) {
-                $params = $this->config['solr']['connection'][static::SOLR_CONNECTION];
+            //Only change the core when this is different than the already given core
+            if (! isset($params['endpoint']['server']['core'])) {
+                $params['endpoint']['server']['core'] = static::SOLR_CONNECTION;
             }
 
-            //Inject the path based on the SOLR_CONNECTION param (default) -- only when empty
-            if (!isset($params['endpoint']['config']['path'])) {
-                $params['endpoint']['config']['path'] = sprintf('/solr/%s', static::SOLR_CONNECTION);
+            if (isset($this->config['solr']['host'])) {
+                $params['endpoint']['server']['host'] = $this->config['solr']['host'];
             }
 
             $this->solrClient = new Client($params);
@@ -206,14 +221,14 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
         return $this->getSolrClient()->update($update);
     }
- 
+
     public function addFilterQuery(string $key, $value): Query
     {
         return $this->getQuery()->addFilterQuery(
             [
-                'key'   => $key,
+                'key' => $key,
                 'query' => $key . ':(' . $value . ')',
-                'tag'   => $key,
+                'tag' => $key,
             ]
         );
     }
@@ -241,7 +256,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $errors = 0;
         echo "\n";
         if ($clear) {
-            echo "Clearing index...";
+            echo 'Clearing index...';
             $this->clearIndex();
             echo " \033[1;33mDone!\033[0m\n";
         }
@@ -250,7 +265,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         foreach (array_reverse($entityCollection) as $entity) {
             try {
                 $this->executeUpdateDocument($entity);
-                echo ".";
+                echo '.';
             } catch (HttpException $e) {
                 $errors++;
                 $responseBody = $e->getBody();
@@ -258,8 +273,8 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $template .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
 
 
-                if (!empty($responseBody)) {
-                    $response = json_decode($responseBody);
+                if (! empty($responseBody)) {
+                    $response = Json::decode($responseBody);
                     if (isset($response->responseHeader)) {
                         $template .= "Solr HTTP response code: \033[1;33m" . $response->responseHeader->status
                             . "\033[0m\n";
@@ -270,7 +285,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 }
                 echo sprintf($template, get_class($entity), '', $e->getMessage());
                 echo "\n";
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $errors++;
 
                 $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
@@ -278,7 +293,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $template .= "Error file: \033[1;33m" . $e->getFile() . "\033[0m\n";
                 $template .= "Error number: \033[1;33m" . $e->getLine() . "\033[0m\n";
 
-                echo \sprintf($template, \get_class($entity), $entity->getId());
+                echo sprintf($template, get_class($entity), 'asdf');
                 echo "\n";
             }
         }
@@ -286,7 +301,21 @@ abstract class AbstractSearchService implements SearchServiceInterface
         echo "\n\n===================================";
         echo "\nDocuments processed: \033[1;33m" . count($entityCollection) . "\033[0m";
         echo "\nErrors: \033[1;33m" . $errors . "\033[0m";
-        echo "\nDuration: \033[1;33m" . gmdate("H:i:s", (time() - $start)) . "\033[0m\n\n";
+        echo "\nDuration: \033[1;33m" . gmdate('H:i:s', time() - $start) . "\033[0m\n\n";
+    }
+
+    public function clearIndex(bool $optimize = true): UpdateResult
+    {
+        print 'test';
+        $update = $this->getSolrClient()->createUpdate();
+        $update->addDeleteQuery('*:*');
+        $update->addCommit();
+        $result = $this->getSolrClient()->update($update);
+        if ($optimize) {
+            $this->optimizeIndex();
+        }
+
+        return $result;
     }
 
     public function executeUpdateDocument(AbstractQuery $update): ?UpdateResult
@@ -298,7 +327,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $update->addCommit();
             }
             $result = $this->getSolrClient()->update($update);
-        } catch (\Solarium\Exception\HttpException $e) {
+        } catch (HttpException $e) {
             throw $e;
         } finally {
             // Garbage collection, only needed when we are dealing with an extract update
@@ -308,21 +337,8 @@ abstract class AbstractSearchService implements SearchServiceInterface
             }
 
             if (null !== $fileName && is_file($fileName)) {
-                \unlink($fileName);
+                unlink($fileName);
             }
-        }
-
-        return $result;
-    }
-
-    public function clearIndex(bool $optimize = true): UpdateResult
-    {
-        $update = $this->getSolrClient()->createUpdate();
-        $update->addDeleteQuery('*:*');
-        $update->addCommit();
-        $result = $this->getSolrClient()->update($update);
-        if ($optimize) {
-            $this->optimizeIndex();
         }
 
         return $result;

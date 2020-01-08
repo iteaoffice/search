@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA Office all rights reserved
  *
@@ -7,7 +8,7 @@
  * @category    Search
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2018 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
  *
  * @link        http://github.com/iteaoffice/main for the canonical source repository
@@ -18,7 +19,7 @@ declare(strict_types=1);
 namespace Search\Controller;
 
 use Search\Service\ConsoleService;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * final class ConsoleController
@@ -27,10 +28,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 final class ConsoleController extends AbstractActionController
 {
-    /**
-     * @var ConsoleService
-     */
-    private $consoleService;
+    private ConsoleService $consoleService;
 
     public function __construct(ConsoleService $consoleService)
     {
@@ -39,21 +37,11 @@ final class ConsoleController extends AbstractActionController
 
     public function searchUpdateAction(): void
     {
-        $this->consoleService->resetIndex((string)$this->params('entity'), false);
+        $this->consoleService->resetIndex((string)$this->params('entity'));
     }
 
     public function searchResetAction(): void
     {
         $this->consoleService->resetIndex((string)$this->params('entity'), true);
-    }
-
-    public function resetRegistrationByMeetingAction(): void
-    {
-        $this->consoleService->updateRegistrationByMeeting((int) $this->params('meeting'), true);
-    }
-
-    public function updateRegistrationByMeetingAction(): void
-    {
-        $this->consoleService->updateRegistrationByMeeting((int) $this->params('meeting'), false);
     }
 }

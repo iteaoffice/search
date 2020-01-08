@@ -5,7 +5,7 @@
  * @category    ProjectTest
  * @package     Entity
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2017 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  */
 
 declare(strict_types=1);
@@ -14,9 +14,8 @@ namespace SearchTest;
 
 use Search\Controller\IndexController;
 use Search\Module;
-use Search\View\Handler\SearchHandler;
 use Testing\Util\AbstractServiceTest;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 /**
  * Class GeneralTest
@@ -30,7 +29,7 @@ class ModuleTest extends AbstractServiceTest
         $module = new Module();
         $config = $module->getConfig();
 
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
         $this->assertArrayHasKey('service_manager', $config);
         $this->assertArrayHasKey(ConfigAbstractFactory::class, $config);
     }
@@ -62,6 +61,5 @@ class ModuleTest extends AbstractServiceTest
 
             $this->assertInstanceOf($service, $instance);
         }
-
     }
 }

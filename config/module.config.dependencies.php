@@ -1,13 +1,8 @@
 <?php
 /**
- * ITEA Office all rights reserved
- *
- * PHP Version 7
- *
- * @category    Project
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2004-2017 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
  *
  * @link        http://github.com/iteaoffice/project for the canonical source repository
@@ -23,9 +18,11 @@ use Contact\Service\ContactService;
 use Event\Service\RegistrationService;
 use General\Service\CountryService;
 use Invoice\Service\InvoiceService;
+use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\ActionService;
 use Project\Service\DescriptionService;
 use Project\Service\IdeaService;
 use Project\Service\ProjectService;
@@ -34,7 +31,7 @@ use Project\Service\VersionDocumentService;
 use Project\Service\VersionService;
 use Project\Service\WorkpackageService;
 use Publication\Service\PublicationService;
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 return [
     ConfigAbstractFactory::class => [
@@ -54,12 +51,14 @@ return [
             VersionDocumentService::class,
             WorkpackageService::class,
             ResultService::class,
+            ActionService::class,
             PublicationService::class,
             InvoiceService::class,
             AffiliationService::class,
             RegistrationService::class,
             CalendarService::class,
             NewsService::class,
+            BlogService::class,
             PressService::class,
             OrganisationService::class,
             CountryService::class
