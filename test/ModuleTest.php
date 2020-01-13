@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ITEA copyright message placeholder
  *
@@ -45,14 +46,12 @@ class ModuleTest extends AbstractServiceTest
         $abstractFacories = $config[ConfigAbstractFactory::class] ?? [];
 
         foreach ($abstractFacories as $service => $dependencies) {
-
             if ($service === IndexController::class) {
                 continue;
             }
 
             $instantiatedDependencies = [];
             foreach ($dependencies as $dependency) {
-
                 $instantiatedDependencies[]
                     = $this->getMockBuilder($dependency)->disableOriginalConstructor()->getMock();
             }
