@@ -15,6 +15,7 @@ namespace Search\Service;
 
 use DateInterval;
 use DateTime;
+use Laminas\Json\Json;
 use RuntimeException;
 use Solarium\Client;
 use Solarium\Core\Query\AbstractQuery;
@@ -24,7 +25,6 @@ use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
 use stdClass;
 use Throwable;
-use Laminas\Json\Json;
 
 use function count;
 use function defined;
@@ -42,11 +42,11 @@ use function unlink;
 
 abstract class AbstractSearchService implements SearchServiceInterface
 {
-    public const DATE_SOLR = 'Y-m-d\TH:i:s\Z';
+    public const DATE_SOLR        = 'Y-m-d\TH:i:s\Z';
     public const QUERY_TERM_BOOST = 30;
-    public const SOLR_CONNECTION = 'default';
+    public const SOLR_CONNECTION  = 'default';
 
-    protected Query $query;
+    protected ?Query $query = null;
     private ?Client $solrClient = null;
     private array $config;
 
@@ -68,9 +68,9 @@ abstract class AbstractSearchService implements SearchServiceInterface
             $searchParts = $searchParts[0];
         }
 
-        $query = '';
-        $fieldIteration = 0;
-        $fieldCount = count($matchFields);
+        $query           = '';
+        $fieldIteration  = 0;
+        $fieldCount      = count($matchFields);
         $searchPartCount = count($searchParts);
 
         $parseTerm = static function (string $field, string $searchTerm): string {
@@ -135,7 +135,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
     {
         //Create the date
         $fromDate = null;
-        $toDate = null;
+        $toDate   = null;
 
         if (isset($data['dateInterval'])) {
             $dateInterval = $data['dateInterval'];
@@ -155,9 +155,9 @@ abstract class AbstractSearchService implements SearchServiceInterface
             }
         }
 
-        $class = new stdClass();
+        $class           = new stdClass();
         $class->fromDate = $fromDate;
-        $class->toDate = $toDate;
+        $class->toDate   = $toDate;
 
         return $class;
     }
@@ -226,9 +226,9 @@ abstract class AbstractSearchService implements SearchServiceInterface
     {
         return $this->getQuery()->addFilterQuery(
             [
-                'key' => $key,
+                'key'   => $key,
                 'query' => $key . ':(' . $value . ')',
-                'tag' => $key,
+                'tag'   => $key,
             ]
         );
     }
@@ -252,7 +252,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public function updateIndexWithCollection(array $entityCollection, bool $clear = false): void
     {
-        $start = time();
+        $start  = time();
         $errors = 0;
         echo "\n";
         if ($clear) {
@@ -269,8 +269,8 @@ abstract class AbstractSearchService implements SearchServiceInterface
             } catch (HttpException $e) {
                 $errors++;
                 $responseBody = $e->getBody();
-                $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
-                $template .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
+                $template     = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
+                $template     .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
 
 
                 if (! empty($responseBody)) {
