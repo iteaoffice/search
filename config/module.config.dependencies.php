@@ -13,16 +13,17 @@ declare(strict_types=1);
 
 namespace Search;
 
-use Affiliation\Service\AffiliationService;
 use Calendar\Service\CalendarService;
 use Contact\Service\ContactService;
 use Event\Service\RegistrationService;
 use General\Service\CountryService;
 use Invoice\Service\InvoiceService;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\AchievementService;
 use Project\Service\ActionService;
 use Project\Service\DescriptionService;
 use Project\Service\IdeaService;
@@ -32,7 +33,6 @@ use Project\Service\VersionDocumentService;
 use Project\Service\VersionService;
 use Project\Service\WorkpackageService;
 use Publication\Service\PublicationService;
-use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 return [
     ConfigAbstractFactory::class => [
@@ -53,9 +53,9 @@ return [
             WorkpackageService::class,
             ResultService::class,
             ActionService::class,
+            AchievementService::class,
             PublicationService::class,
             InvoiceService::class,
-            AffiliationService::class,
             RegistrationService::class,
             CalendarService::class,
             NewsService::class,

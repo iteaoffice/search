@@ -22,7 +22,6 @@ use Laminas\ModuleManager\Feature;
 
 /**
  * Class Module
- *
  * @package Search
  */
 final class Module implements
@@ -39,18 +38,18 @@ final class Module implements
         return [
             'Search management',
             // Describe available commands
-            'search reset <entity>' => 'Reset the search index (wipe and rebuild index)',
+            'search reset <entity>'  => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
                 'Choose an entity to reset: project, version, roadmap, version-document, 
-                workpackage-document, result, impact-stream, action, publication, invoice, contact, 
+                workpackage-document, result, impact-stream, action, achievement, publication, invoice, contact, 
                 profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
             'search update <entity>' => 'Update the search index',
             [
                 '<entity>',
                 'Choose an entity to update: project, version, roadmap, version-document, 
-                workpackage-document, result, impact-stream, action, publication, invoice, contact, 
+                workpackage-document, result, impact-stream, action, achievement, publication, invoice, contact, 
                 profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
         ];
