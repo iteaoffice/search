@@ -1,24 +1,23 @@
 <?php
 
 /**
- * ITEA Office copyright message placeholder
+ * ITEA Office all rights reserved
  *
- * @category  Search
- * @package   Form
- * @author    Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright Copyright (c) 2004-2017 ITEA Office (http://itea3.org)
+ * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
+ * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
+ * @license     https://itea3.org/license.txt proprietary
  */
 
 declare(strict_types=1);
 
 namespace Search\Form;
 
-use Solarium\Component\FacetSet as FacetSetComponent;
-use Solarium\Component\Result\FacetSet as FacetSetResult;
 use Laminas\Form\Element;
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+use Solarium\Component\FacetSet as FacetSetComponent;
+use Solarium\Component\Result\FacetSet as FacetSetResult;
 
 use function array_filter;
 use function array_reverse;
