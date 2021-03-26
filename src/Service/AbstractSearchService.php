@@ -255,9 +255,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $errors = 0;
         echo "\n";
         if ($clear) {
-            echo 'Clearing index...';
             $this->clearIndex();
-            echo " \033[1;33mDone!\033[0m\n";
         }
         echo "Updating index:\n";
         // Iterate all publications in the database and add them to the search index
@@ -305,7 +303,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public function clearIndex(bool $optimize = true): UpdateResult
     {
-        print 'test';
+        echo 'Clearing index...';
         $update = $this->getSolrClient()->createUpdate();
         $update->addDeleteQuery('*:*');
         $update->addCommit();
@@ -313,6 +311,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         if ($optimize) {
             $this->optimizeIndex();
         }
+        echo " \033[1;33mDone!\033[0m\n";
 
         return $result;
     }
