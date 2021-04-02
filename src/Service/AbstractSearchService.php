@@ -269,7 +269,6 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $template     = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
                 $template     .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
 
-
                 if (! empty($responseBody)) {
                     $response = Json::decode($responseBody);
                     if (isset($response->responseHeader)) {
@@ -285,12 +284,12 @@ abstract class AbstractSearchService implements SearchServiceInterface
             } catch (Throwable $e) {
                 $errors++;
 
-                $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
+                $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %d failed\033[0m\n";
                 $template .= "Error message: \033[1;33m" . $e->getMessage() . "\033[0m\n";
                 $template .= "Error file: \033[1;33m" . $e->getFile() . "\033[0m\n";
                 $template .= "Error number: \033[1;33m" . $e->getLine() . "\033[0m\n";
 
-                echo sprintf($template, get_class($entity), 'asdf');
+                echo sprintf($template, get_class($entity), $entity->getId());
                 echo "\n";
             }
         }
