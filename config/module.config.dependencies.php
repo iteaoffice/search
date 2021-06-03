@@ -1,11 +1,12 @@
 <?php
 
 /**
- * ITEA Office all rights reserved
  *
  * @author      Johan van der Heide <johan.van.der.heide@itea3.org>
- * @copyright   Copyright (c) 2021 ITEA Office (https://itea3.org)
+ * @copyright   Copyright (c) 2019 ITEA Office (https://itea3.org)
  * @license     https://itea3.org/license.txt proprietary
+ *
+ * @link        http://github.com/iteaoffice/project for the canonical source repository
  */
 
 declare(strict_types=1);
@@ -22,6 +23,7 @@ use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\Achievement\ExploitableResultService;
 use Project\Service\AchievementService;
 use Project\Service\ActionService;
 use Project\Service\DescriptionService;
@@ -53,6 +55,7 @@ return [
             ResultService::class,
             ActionService::class,
             AchievementService::class,
+            ExploitableResultService::class,
             PublicationService::class,
             InvoiceService::class,
             RegistrationService::class,

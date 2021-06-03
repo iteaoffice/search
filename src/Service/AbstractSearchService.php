@@ -255,9 +255,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         $errors = 0;
         echo "\n";
         if ($clear) {
-            echo 'Clearing index...';
             $this->clearIndex();
-            echo " \033[1;33mDone!\033[0m\n";
         }
         echo "Updating index:\n";
         // Iterate all publications in the database and add them to the search index
@@ -270,7 +268,6 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $responseBody = $e->getBody();
                 $template     = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
                 $template     .= "Solarium HTTP request status: \033[1;33m%s\033[0m\n";
-
 
                 if (! empty($responseBody)) {
                     $response = Json::decode($responseBody);
@@ -287,12 +284,12 @@ abstract class AbstractSearchService implements SearchServiceInterface
             } catch (Throwable $e) {
                 $errors++;
 
-                $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %s failed\033[0m\n";
+                $template = "\n\n\033[0;31mError: Document creation for entity %s with ID %d failed\033[0m\n";
                 $template .= "Error message: \033[1;33m" . $e->getMessage() . "\033[0m\n";
                 $template .= "Error file: \033[1;33m" . $e->getFile() . "\033[0m\n";
                 $template .= "Error number: \033[1;33m" . $e->getLine() . "\033[0m\n";
 
-                echo sprintf($template, get_class($entity), 'asdf');
+                echo sprintf($template, get_class($entity), $entity->getId());
                 echo "\n";
             }
         }
@@ -305,7 +302,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
 
     public function clearIndex(bool $optimize = true): UpdateResult
     {
-        print 'test';
+        echo 'Clearing index...';
         $update = $this->getSolrClient()->createUpdate();
         $update->addDeleteQuery('*:*');
         $update->addCommit();
@@ -313,6 +310,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         if ($optimize) {
             $this->optimizeIndex();
         }
+        echo " \033[1;33mDone!\033[0m\n";
 
         return $result;
     }

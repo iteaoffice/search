@@ -22,6 +22,7 @@ use News\Service\BlogService;
 use News\Service\NewsService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
+use Project\Service\Achievement\ExploitableResultService;
 use Project\Service\AchievementService;
 use Project\Service\ActionService;
 use Project\Service\DescriptionService;
@@ -50,6 +51,7 @@ class ConsoleService
     private ResultService $resultService;
     private ActionService $actionService;
     private AchievementService $achievementService;
+    private ExploitableResultService $exploitableResultService;
     private PublicationService $publicationService;
     private InvoiceService $invoiceService;
     private RegistrationService $registrationService;
@@ -71,6 +73,7 @@ class ConsoleService
         ResultService $resultService,
         ActionService $actionService,
         AchievementService $achievementService,
+        ExploitableResultService $exploitableResultService,
         PublicationService $publicationService,
         InvoiceService $invoiceService,
         RegistrationService $registrationService,
@@ -81,25 +84,26 @@ class ConsoleService
         OrganisationService $organisationService,
         CountryService $countryService
     ) {
-        $this->contactService         = $contactService;
-        $this->ideaService            = $ideaService;
-        $this->descriptionService     = $descriptionService;
-        $this->projectService         = $projectService;
-        $this->versionService         = $versionService;
-        $this->versionDocumentService = $versionDocumentService;
-        $this->workpackageService     = $WorkpackageService;
-        $this->resultService          = $resultService;
-        $this->actionService          = $actionService;
-        $this->achievementService     = $achievementService;
-        $this->publicationService     = $publicationService;
-        $this->invoiceService         = $invoiceService;
-        $this->registrationService    = $registrationService;
-        $this->calendarService        = $calendarService;
-        $this->newsService            = $newsService;
-        $this->blogService            = $blogService;
-        $this->pressService           = $pressService;
-        $this->organisationService    = $organisationService;
-        $this->countryService         = $countryService;
+        $this->contactService           = $contactService;
+        $this->ideaService              = $ideaService;
+        $this->descriptionService       = $descriptionService;
+        $this->projectService           = $projectService;
+        $this->versionService           = $versionService;
+        $this->versionDocumentService   = $versionDocumentService;
+        $this->workpackageService       = $WorkpackageService;
+        $this->resultService            = $resultService;
+        $this->actionService            = $actionService;
+        $this->achievementService       = $achievementService;
+        $this->exploitableResultService = $exploitableResultService;
+        $this->publicationService       = $publicationService;
+        $this->invoiceService           = $invoiceService;
+        $this->registrationService      = $registrationService;
+        $this->calendarService          = $calendarService;
+        $this->newsService              = $newsService;
+        $this->blogService              = $blogService;
+        $this->pressService             = $pressService;
+        $this->organisationService      = $organisationService;
+        $this->countryService           = $countryService;
     }
 
     public function resetIndex(string $index, $clearIndex = false): void
@@ -138,6 +142,9 @@ class ConsoleService
             case 'achievement':
                 $this->achievementService->updateCollectionInSearchEngine($clearIndex);
                 break;
+            case 'exploitable-result':
+                $this->exploitableResultService->updateCollectionInSearchEngine($clearIndex);
+                break;
             case 'action':
                 $this->actionService->updateCollectionInSearchEngine($clearIndex);
                 break;
@@ -173,6 +180,7 @@ class ConsoleService
                 $this->descriptionService->updateCollectionInSearchEngine($clearIndex);
                 $this->projectService->updateCollectionInSearchEngine($clearIndex);
                 $this->achievementService->updateCollectionInSearchEngine($clearIndex);
+                $this->exploitableResultService->updateCollectionInSearchEngine($clearIndex);
                 $this->versionService->updateCollectionInSearchEngine($clearIndex);
                 $this->actionService->updateCollectionInSearchEngine($clearIndex);
                 $this->versionDocumentService->updateCollectionInSearchEngine($clearIndex);

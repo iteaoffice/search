@@ -36,15 +36,15 @@ final class Module implements
             'search reset <entity>'  => 'Reset the search index (wipe and rebuild index)',
             [
                 '<entity>',
-                'Choose an entity to reset: project, version, roadmap, version-document, 
-                workpackage-document, result, impact-stream, action, achievement, publication, invoice, contact, 
+                'Choose an entity to reset: project, version, roadmap, version-document, workpackage-document, 
+                result, impact-stream, action, achievement, exploitable-result, publication, invoice, contact, 
                 profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
             'search update <entity>' => 'Update the search index',
             [
                 '<entity>',
-                'Choose an entity to update: project, version, roadmap, version-document, 
-                workpackage-document, result, impact-stream, action, achievement, publication, invoice, contact, 
+                'Choose an entity to update: project, version, roadmap, version-document, workpackage-document,
+                result, impact-stream, action, achievement, exploitable-result, publication, invoice, contact, 
                 profile, affiliation, registration, calendar, news, blog, press, organisation, country, all',
             ],
         ];
