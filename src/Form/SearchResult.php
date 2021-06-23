@@ -37,7 +37,7 @@ use function ucfirst;
  */
 final class SearchResult extends Form
 {
-    private $facetLabels = [];
+    private array $facetLabels = [];
 
     public function __construct(array $searchFields = [])
     {
