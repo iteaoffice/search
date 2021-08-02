@@ -38,13 +38,13 @@ use Publication\Service\PublicationService;
 return [
     ConfigAbstractFactory::class => [
         // Controllers
-        Controller\IndexController::class   => [
+        Controller\IndexController::class => [
             'Config'
         ],
-        Controller\ConsoleController::class => [
+        Command\UpdateIndex::class        => [
             Service\ConsoleService::class
         ],
-        Service\ConsoleService::class       => [
+        Service\ConsoleService::class     => [
             ContactService::class,
             IdeaService::class,
             DescriptionService::class,

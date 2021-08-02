@@ -8,16 +8,15 @@
  * @license     https://itea3.org/license.txt proprietary
  */
 
-use Search\Controller;
-use Search\Service;
+namespace Search;
+
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Laminas\Stdlib;
 
 $config = [
     'controllers'        => [
         'factories' => [
-            Controller\IndexController::class   => ConfigAbstractFactory::class,
-            Controller\ConsoleController::class => ConfigAbstractFactory::class,
+            Controller\IndexController::class => ConfigAbstractFactory::class,
         ],
     ],
     'controller_plugins' => [
@@ -30,6 +29,7 @@ $config = [
     ],
     'service_manager'    => [
         'factories' => [
+            Command\UpdateIndex::class    => ConfigAbstractFactory::class,
             Service\ConsoleService::class => ConfigAbstractFactory::class,
         ],
     ],
