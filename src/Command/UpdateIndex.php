@@ -38,7 +38,7 @@ final class UpdateIndex extends Command
         $this->addArgument(
             'index',
             InputOption::VALUE_REQUIRED,
-            'equipment, equipment-reservation, chemical, chemical-container, building, room, zone, zone-reservation, request, all',
+            'contact, profile, registration, idea, roadmap, project, version, version-document, workpackage-document, result, achievement, exploitable-result, action, publication, invoice, calendar, news, blog, press, organisation, city, tender, solution, country, all',
             'all'
         );
     }

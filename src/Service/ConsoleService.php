@@ -20,6 +20,9 @@ use InvalidArgumentException;
 use Invoice\Service\InvoiceService;
 use News\Service\BlogService;
 use News\Service\NewsService;
+use Organisation\Service\AdvisoryBoard\CityService;
+use Organisation\Service\AdvisoryBoard\SolutionService;
+use Organisation\Service\AdvisoryBoard\TenderService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
 use Project\Service\Achievement\ExploitableResultService;
@@ -60,37 +63,20 @@ class ConsoleService
     private BlogService $blogService;
     private PressService $pressService;
     private OrganisationService $organisationService;
+    private CityService $cityService;
+    private TenderService $tenderService;
+    private SolutionService $solutionService;
     private CountryService $countryService;
 
-    public function __construct(
-        ContactService $contactService,
-        IdeaService $ideaService,
-        DescriptionService $descriptionService,
-        ProjectService $projectService,
-        VersionService $versionService,
-        VersionDocumentService $versionDocumentService,
-        WorkpackageService $WorkpackageService,
-        ResultService $resultService,
-        ActionService $actionService,
-        AchievementService $achievementService,
-        ExploitableResultService $exploitableResultService,
-        PublicationService $publicationService,
-        InvoiceService $invoiceService,
-        RegistrationService $registrationService,
-        CalendarService $calendarService,
-        NewsService $newsService,
-        BlogService $blogService,
-        PressService $pressService,
-        OrganisationService $organisationService,
-        CountryService $countryService
-    ) {
+    public function __construct(ContactService $contactService, IdeaService $ideaService, DescriptionService $descriptionService, ProjectService $projectService, VersionService $versionService, VersionDocumentService $versionDocumentService, WorkpackageService $workpackageService, ResultService $resultService, ActionService $actionService, AchievementService $achievementService, ExploitableResultService $exploitableResultService, PublicationService $publicationService, InvoiceService $invoiceService, RegistrationService $registrationService, CalendarService $calendarService, NewsService $newsService, BlogService $blogService, PressService $pressService, OrganisationService $organisationService, CityService $cityService, TenderService $tenderService, SolutionService $solutionService, CountryService $countryService)
+    {
         $this->contactService           = $contactService;
         $this->ideaService              = $ideaService;
         $this->descriptionService       = $descriptionService;
         $this->projectService           = $projectService;
         $this->versionService           = $versionService;
         $this->versionDocumentService   = $versionDocumentService;
-        $this->workpackageService       = $WorkpackageService;
+        $this->workpackageService       = $workpackageService;
         $this->resultService            = $resultService;
         $this->actionService            = $actionService;
         $this->achievementService       = $achievementService;
@@ -103,8 +89,12 @@ class ConsoleService
         $this->blogService              = $blogService;
         $this->pressService             = $pressService;
         $this->organisationService      = $organisationService;
+        $this->cityService              = $cityService;
+        $this->tenderService            = $tenderService;
+        $this->solutionService          = $solutionService;
         $this->countryService           = $countryService;
     }
+
 
     public function resetIndex(string $index, $clearIndex = false): void
     {
@@ -169,6 +159,15 @@ class ConsoleService
             case 'organisation':
                 $this->organisationService->updateCollectionInSearchEngine($clearIndex);
                 break;
+            case 'city':
+                $this->cityService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'tender':
+                $this->tenderService->updateCollectionInSearchEngine($clearIndex);
+                break;
+            case 'solution':
+                $this->solutionService->updateCollectionInSearchEngine($clearIndex);
+                break;
             case 'country':
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
@@ -193,6 +192,9 @@ class ConsoleService
                 $this->blogService->updateCollectionInSearchEngine($clearIndex);
                 $this->pressService->updateCollectionInSearchEngine($clearIndex);
                 $this->organisationService->updateCollectionInSearchEngine($clearIndex);
+                $this->cityService->updateCollectionInSearchEngine($clearIndex);
+                $this->tenderService->updateCollectionInSearchEngine($clearIndex);
+                $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
             default:

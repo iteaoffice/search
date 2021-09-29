@@ -21,6 +21,9 @@ use Invoice\Service\InvoiceService;
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use News\Service\BlogService;
 use News\Service\NewsService;
+use Organisation\Service\AdvisoryBoard\CityService;
+use Organisation\Service\AdvisoryBoard\SolutionService;
+use Organisation\Service\AdvisoryBoard\TenderService;
 use Organisation\Service\OrganisationService;
 use Press\Service\PressService;
 use Project\Service\Achievement\ExploitableResultService;
@@ -64,6 +67,9 @@ return [
             BlogService::class,
             PressService::class,
             OrganisationService::class,
+            CityService::class,
+            TenderService::class,
+            SolutionService::class,
             CountryService::class
         ],
     ]
