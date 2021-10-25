@@ -232,7 +232,7 @@ abstract class AbstractSearchService implements SearchServiceInterface
         );
     }
 
-    public function getQuery(): ?Query
+    public function getQuery(): Query
     {
         return $this->query;
     }

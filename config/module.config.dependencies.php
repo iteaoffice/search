@@ -68,7 +68,6 @@ return [
             PressService::class,
             OrganisationService::class,
             CityService::class,
-            TenderService::class,
             SolutionService::class,
             CountryService::class
         ],

@@ -64,11 +64,10 @@ class ConsoleService
     private PressService $pressService;
     private OrganisationService $organisationService;
     private CityService $cityService;
-    private TenderService $tenderService;
     private SolutionService $solutionService;
     private CountryService $countryService;
 
-    public function __construct(ContactService $contactService, IdeaService $ideaService, DescriptionService $descriptionService, ProjectService $projectService, VersionService $versionService, VersionDocumentService $versionDocumentService, WorkpackageService $workpackageService, ResultService $resultService, ActionService $actionService, AchievementService $achievementService, ExploitableResultService $exploitableResultService, PublicationService $publicationService, InvoiceService $invoiceService, RegistrationService $registrationService, CalendarService $calendarService, NewsService $newsService, BlogService $blogService, PressService $pressService, OrganisationService $organisationService, CityService $cityService, TenderService $tenderService, SolutionService $solutionService, CountryService $countryService)
+    public function __construct(ContactService $contactService, IdeaService $ideaService, DescriptionService $descriptionService, ProjectService $projectService, VersionService $versionService, VersionDocumentService $versionDocumentService, WorkpackageService $workpackageService, ResultService $resultService, ActionService $actionService, AchievementService $achievementService, ExploitableResultService $exploitableResultService, PublicationService $publicationService, InvoiceService $invoiceService, RegistrationService $registrationService, CalendarService $calendarService, NewsService $newsService, BlogService $blogService, PressService $pressService, OrganisationService $organisationService, CityService $cityService, SolutionService $solutionService, CountryService $countryService)
     {
         $this->contactService           = $contactService;
         $this->ideaService              = $ideaService;
@@ -90,7 +89,6 @@ class ConsoleService
         $this->pressService             = $pressService;
         $this->organisationService      = $organisationService;
         $this->cityService              = $cityService;
-        $this->tenderService            = $tenderService;
         $this->solutionService          = $solutionService;
         $this->countryService           = $countryService;
     }
@@ -162,9 +160,6 @@ class ConsoleService
             case 'city':
                 $this->cityService->updateCollectionInSearchEngine($clearIndex);
                 break;
-            case 'tender':
-                $this->tenderService->updateCollectionInSearchEngine($clearIndex);
-                break;
             case 'solution':
                 $this->solutionService->updateCollectionInSearchEngine($clearIndex);
                 break;
@@ -193,7 +188,6 @@ class ConsoleService
                 $this->pressService->updateCollectionInSearchEngine($clearIndex);
                 $this->organisationService->updateCollectionInSearchEngine($clearIndex);
                 $this->cityService->updateCollectionInSearchEngine($clearIndex);
-                $this->tenderService->updateCollectionInSearchEngine($clearIndex);
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 $this->countryService->updateCollectionInSearchEngine($clearIndex);
                 break;
