@@ -18,7 +18,7 @@
     "php": "^7.4 || ^8.0",
     "laminas/laminas-mvc": "^3.2",
     "laminas/laminas-mvc-form": "^2.1",
-    "solarium/solarium": "^5.1",
+    "solarium/solarium": "^6.1.5",
     "phpoffice/phppresentation": "^0.9"
   },
   "require-dev": {
