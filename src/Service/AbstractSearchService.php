@@ -17,12 +17,14 @@ use DateTime;
 use Laminas\Json\Json;
 use RuntimeException;
 use Solarium\Client;
+use Solarium\Core\Client\Adapter\Http;
 use Solarium\Core\Query\AbstractQuery;
 use Solarium\Exception\HttpException;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result as SelectResult;
 use Solarium\QueryType\Update\Result as UpdateResult;
 use stdClass;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Throwable;
 
 use function count;
@@ -201,7 +203,10 @@ abstract class AbstractSearchService implements SearchServiceInterface
                 $params['endpoint']['server']['host'] = $this->config['solr']['host'];
             }
 
-            $this->solrClient = new Client($params);
+            $adapter         = new Http();
+            $eventDispatcher = new EventDispatcher();
+
+            $this->solrClient = new Client($adapter, $eventDispatcher, $params);
         }
 
         return $this->solrClient;
